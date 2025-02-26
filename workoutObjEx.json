@@ -1,35 +1,72 @@
-{
-    "user": "adam",
-    "date": "december 18, 2024",
-    "notes": "",
-    "exercises": [
-        {
-            "name": "name",
-            "weight": 50,
-            "rep": 10,
-            "set": 4,
-            "comments": ""
-        },
-        {
-            "name": "name",
-            "weight": 50,
-            "rep": 10,
-            "set": 4,
-            "comments": ""
-        },
-        {
-            "name": "name",
-            "weight": 50,
-            "rep": 10,
-            "set": 4,
-            "comments": ""
-        },
-        {
-            "name": "name",
-            "weight": 50,
-            "rep": 10,
-            "set": 4,
-            "comments": ""
-        }
-    ]
-}
+[
+    {
+        "user": "adam",
+        "date": "december 18, 2024",
+        "notes": "",
+        "exercises": [
+            {
+                "name": "name",
+                "weight": 50,
+                "rep": 10,
+                "set": 4,
+                "comments": ""
+            },
+            {
+                "name": "name",
+                "weight": 50,
+                "rep": 10,
+                "set": 4,
+                "comments": ""
+            },
+            {
+                "name": "name",
+                "weight": 50,
+                "rep": 10,
+                "set": 4,
+                "comments": ""
+            },
+            {
+                "name": "name",
+                "weight": 50,
+                "rep": 10,
+                "set": 4,
+                "comments": ""
+            }
+        ]
+    },
+    {
+        "user": "adam",
+        "date": "december 19, 2024",
+        "notes": "",
+        "exercises": [
+            {
+                "name": "name",
+                "weight": 50,
+                "rep": 10,
+                "set": 4,
+                "comments": ""
+            },
+            {
+                "name": "name",
+                "weight": 50,
+                "rep": 10,
+                "set": 4,
+                "comments": ""
+            },
+            {
+                "name": "name",
+                "weight": 50,
+                "rep": 10,
+                "set": 4,
+                "comments": ""
+            },
+            {
+                "name": "name",
+                "weight": 50,
+                "rep": 10,
+                "set": 4,
+                "comments": ""
+            }
+        ]
+    }
+]
