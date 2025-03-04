@@ -1,16 +1,43 @@
 import { Button, Text } from "@react-navigation/elements";
 import { useNavigation } from "@react-navigation/native";
-import { StyleSheet, View } from "react-native";
+import { Dimensions, StyleSheet, View } from "react-native";
+
+const { width } = Dimensions.get("window");
+const GAP = 10; // Adjust gap size
+const CARD_WIDTH = width / 2 - GAP; // Subtract gap and divide by 2
 
 export function Home() {
     const navigation = useNavigation();
 
     return (
         <View style={styles.container}>
-            <Text>Home Screen</Text>
+            <View style={styles.cardContainer}>
+                <Text style={styles.head1}>Sessions</Text>
+
+                <Text style={styles.head1}>30</Text>
+            </View>
+            <View style={styles.cardContainer}>
+                <Text style={styles.head1}>Sessions</Text>
+                <Text style={styles.head1}>30</Text>
+            </View>
+            <View style={styles.cardContainer}>
+                <Text style={styles.head1}>Sessions</Text>
+                <Text style={styles.head1}>30</Text>
+            </View>
+            <View style={styles.cardContainer}>
+                <Text style={styles.head1}>Sessions</Text>
+                <Text style={styles.head1}>30</Text>
+            </View>
+            <View style={styles.cardContainer}>
+                <Text style={styles.head1}>Sessions</Text>
+                <Text style={styles.head1}>30</Text>
+            </View>
 
             <Button onPress={() => navigation.navigate("Settings")}>
                 Go to Settings
+            </Button>
+            <Button onPress={() => navigation.navigate("Calendar")}>
+                Go to Calendar
             </Button>
         </View>
     );
@@ -19,8 +46,20 @@ export function Home() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: "center",
+        flexDirection: "row",
+        // justifyContent: "center",
         alignItems: "center",
         gap: 10,
+        flexWrap: "wrap",
+        padding: GAP / 2, // Ensures even padding around edges
+    },
+    head1: {
+        fontSize: 30,
+        fontWeight: 400,
+    },
+    cardContainer: {
+        width: CARD_WIDTH, // Adjusted width accounting for the gap
+        aspectRatio: 1, // Ensures square shape
+        backgroundColor: "gray",
     },
 });

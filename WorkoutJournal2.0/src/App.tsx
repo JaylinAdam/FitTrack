@@ -9,6 +9,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Button } from "@react-navigation/elements";
 import { Settings } from "./navigation/screens/Settings";
 import { Home } from "./navigation/screens/Home";
+import { Calendar } from "./navigation/screens/Calendar";
 
 const Stack = createNativeStackNavigator();
 
@@ -18,7 +19,7 @@ function RootStack() {
             initialRouteName="Home"
             screenOptions={{
                 headerStyle: {
-                    backgroundColor: "#f4511e",
+                    backgroundColor: "#00284e",
                 },
                 headerTintColor: "#fff",
                 headerTitleStyle: {
@@ -29,9 +30,10 @@ function RootStack() {
             <Stack.Screen
                 name="Home"
                 component={Home}
-                options={{ title: "Overview" }}
+                options={{ title: "March 2025" }}
             />
             <Stack.Screen name="Settings" component={Settings} />
+            <Stack.Screen name="Calendar" component={Calendar} />
         </Stack.Navigator>
     );
 }
