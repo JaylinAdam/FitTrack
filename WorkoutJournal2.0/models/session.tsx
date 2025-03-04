@@ -1,12 +1,15 @@
-import { Exercise } from "./excercise";
-
-class Session {
+export class Session {
     user: string;
-    date: Date;
+    date: string;
     notes: string;
     exercises: Exercise[];
 
-    constructor(user: string, date: Date, notes: string, exercises: Exercise[]) {
+    constructor(
+        user: string,
+        date: string,
+        notes: string,
+        exercises: Exercise[]
+    ) {
         this.user = user;
         this.date = date;
         this.notes = notes;

@@ -1,10 +1,15 @@
-class Exercise {
+export class Session {
     user: string;
-    date: Date;
+    date: string;
     notes: string;
     exercies: Exercise[];
 
-    constructor(user: string, date: Date, notes: string, exercies: Exercise[]) {
+    constructor(
+        user: string,
+        date: string,
+        notes: string,
+        exercies: Exercise[]
+    ) {
         this.user = user;
         this.date = date;
         this.notes = notes;
