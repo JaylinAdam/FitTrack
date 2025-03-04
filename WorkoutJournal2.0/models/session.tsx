@@ -1,13 +1,15 @@
+import { Exercise } from "./excercise";
+
 class Session {
     user: string;
     date: Date;
     notes: string;
-    exercies: Exercise[];
+    exercises: Exercise[];
 
-    constructor(user: string, date: Date, notes: string, exercies: Exercise[]) {
+    constructor(user: string, date: Date, notes: string, exercises: Exercise[]) {
         this.user = user;
         this.date = date;
         this.notes = notes;
-        this.exercies = exercies;
+        this.exercises = exercises;
     }
 }

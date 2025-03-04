@@ -22,7 +22,7 @@ export default function HomeLayout() {
             <Stack.Screen
                 name="calendar"
                 options={{
-                    title: "Calendar",
+                    title: "Workouts",
                 }}
             />
         </Stack>

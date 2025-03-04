@@ -1,19 +1,19 @@
-import { Button, Text } from "@react-navigation/elements";
-import { useNavigation } from "@react-navigation/native";
-import { StyleSheet, View } from "react-native";
+import { Button, Text } from "@react-navigation/elements"
+import { useNavigation } from "@react-navigation/native"
+import { StyleSheet, View } from "react-native"
 
 export function Home() {
-    const navigation = useNavigation();
+    const navigation = useNavigation()
 
     return (
         <View style={styles.container}>
             <Text>Home Screen</Text>
 
-            <Button onPress={() => navigation.navigate("Settings")}>
-                Go to Settings
+            <Button onPress={() => navigation.navigate("Workouts")}>
+                View Workouts
             </Button>
         </View>
-    );
+    )
 }
 
 const styles = StyleSheet.create({
@@ -23,4 +23,4 @@ const styles = StyleSheet.create({
         alignItems: "center",
         gap: 10,
     },
-});
+})

@@ -4,8 +4,7 @@ import { View, Text, StyleSheet } from "react-native";
 export default function HomeScreen() {
     return (
         <View style={styles.container}>
-            <Text>This is the home page inner texts</Text>
-            <Link href="/calendar">View Calendar!</Link>
+            <Link href="/calendar">View Workouts</Link>
         </View>
     );
 }

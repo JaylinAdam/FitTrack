@@ -1,4 +1,3 @@
-import { IconSymbol } from "@/app-example/components/ui/IconSymbol";
 import { Tabs } from "expo-router";
 
 export default function TabLayout() {
@@ -7,19 +6,13 @@ export default function TabLayout() {
             <Tabs.Screen
                 name="(home)"
                 options={{
-                    title: "Home",
-                    tabBarIcon: ({ color }) => (
-                        <IconSymbol size={28} name="house.fill" color={color} />
-                    ),
+                    title: "Home"
                 }}
             />
             <Tabs.Screen
                 name="settings"
                 options={{
                     title: "Settings",
-                    tabBarIcon: ({ color }) => (
-                        <IconSymbol size={28} name="house.fill" color={color} />
-                    ),
                 }}
             />
         </Tabs>

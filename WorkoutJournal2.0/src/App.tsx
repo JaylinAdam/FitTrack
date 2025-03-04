@@ -1,14 +1,14 @@
-import * as React from "react";
-import { View, Text } from "react-native";
+import * as React from "react"
+import { View, Text } from "react-native"
 import {
     createStaticNavigation,
     NavigationContainer,
     useNavigation,
-} from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Button } from "@react-navigation/elements";
-import { Settings } from "./navigation/screens/Settings";
-import { Home } from "./navigation/screens/Home";
+} from "@react-navigation/native"
+import { createNativeStackNavigator } from "@react-navigation/native-stack"
+import { Button } from "@react-navigation/elements"
+import { Workouts } from "./navigation/screens/Workouts"
+import { Home } from "./navigation/screens/Home"
 
 const Stack = createNativeStackNavigator();
 
@@ -31,7 +31,7 @@ function RootStack() {
                 component={Home}
                 options={{ title: "Overview" }}
             />
-            <Stack.Screen name="Settings" component={Settings} />
+            <Stack.Screen name="Workouts" component={Workouts} />
         </Stack.Navigator>
     );
 }
@@ -41,5 +41,5 @@ export default function App() {
         <NavigationContainer>
             <RootStack />
         </NavigationContainer>
-    );
+    )
 }

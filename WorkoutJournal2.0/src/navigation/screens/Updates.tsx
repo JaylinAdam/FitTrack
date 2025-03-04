@@ -1,5 +1,5 @@
-import { Text } from '@react-navigation/elements';
-import { StyleSheet, View } from 'react-native';
+import { Text } from '@react-navigation/elements'
+import { StyleSheet, View } from 'react-native'
 
 export function Updates() {
   return (
@@ -16,4 +16,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 10,
   },
-});
+})

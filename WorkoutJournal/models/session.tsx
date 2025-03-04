@@ -1,4 +1,4 @@
-class Session {
+class Exercise {
     user: string;
     date: Date;
     notes: string;

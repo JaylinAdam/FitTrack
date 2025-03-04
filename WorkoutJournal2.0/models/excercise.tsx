@@ -1,9 +1,9 @@
-class Exercise {
+export class Exercise {
     name: string;
-    weight: number;
-    rep: number;
-    sets: number;
-    comments: string;
+    weight?: number;
+    rep?: number;
+    sets?: number;
+    comments?: string;
 
     constructor(
         name: string,
