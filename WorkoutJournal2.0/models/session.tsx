@@ -1,3 +1,5 @@
+import { Exercise } from "./excercise";
+
 export class Session {
     user: string;
     date: string;

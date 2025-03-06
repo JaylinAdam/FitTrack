@@ -1,21 +1,18 @@
-class Exercise {
+export class Exercise {
     name?: string;
-    weight?: string;
-    rep?: string;
+    info?: string;
+    reps?: string;
     sets?: string;
-    comments?: string;
 
     constructor(
         name?: string,
-        weight?: string,
-        rep?: string,
+        info?: string,
+        reps?: string,
         sets?: string,
-        comments?: string
     ) {
         this.name = name || "";
-        this.weight = weight || "";
-        this.rep = rep || "";
+        this.info = info || "";
+        this.reps = reps || "";
         this.sets = sets || "";
-        this.comments = comments || "";
     }
 }
