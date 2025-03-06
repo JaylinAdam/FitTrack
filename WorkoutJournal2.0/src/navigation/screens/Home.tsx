@@ -11,30 +11,8 @@ export function Home() {
 
     return (
         <View style={styles.container}>
-            <View style={styles.cardContainer}>
-                <Text style={styles.head1}>Sessions</Text>
-
-                <Text style={styles.head1}>30</Text>
-            </View>
-            <View style={styles.cardContainer}>
-                <Text style={styles.head1}>Sessions</Text>
-                <Text style={styles.head1}>30</Text>
-            </View>
-            <View style={styles.cardContainer}>
-                <Text style={styles.head1}>Sessions</Text>
-                <Text style={styles.head1}>30</Text>
-            </View>
-            <View style={styles.cardContainer}>
-                <Text style={styles.head1}>Sessions</Text>
-                <Text style={styles.head1}>30</Text>
-            </View>
-            <View style={styles.cardContainer}>
-                <Text style={styles.head1}>Sessions</Text>
-                <Text style={styles.head1}>30</Text>
-            </View>
-
-            <Button onPress={() => navigation.navigate("Workouts")}>
-                View Workouts
+            <Button onPress={() => navigation.navigate("Settings")}>
+                View Settings
             </Button>
             <Button onPress={() => navigation.navigate("Calendar")}>
                 Go to Calendar

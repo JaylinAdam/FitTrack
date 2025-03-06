@@ -10,7 +10,7 @@ import bell from '../assets/bell.png'
 import newspaper from '../assets/newspaper.png'
 import { Home } from './screens/Home'
 import { Profile } from './screens/Profile'
-import { Workouts } from './screens/Workouts'
+import { Settings } from './screens/Settings'
 import { Updates } from './screens/Updates'
 import { NotFound } from './screens/NotFound'
 
@@ -72,7 +72,7 @@ const RootStack = createNativeStackNavigator({
       },
     },
     Workouts: {
-      screen: Workouts,
+      screen: Settings,
       options: ({ navigation }) => ({
         presentation: 'modal',
         headerRight: () => (

@@ -6,10 +6,11 @@ import {
     useNavigation,
 } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
-import { Workouts } from "./navigation/screens/Workouts"
+import { Settings } from "./navigation/screens/Settings"
 import { Home } from "./navigation/screens/Home" 
 import { Button } from "@react-navigation/elements";
 import { Calendar } from "./navigation/screens/Calendar";
+import { PaperProvider } from "react-native-paper"
 
 const Stack = createNativeStackNavigator();
 
@@ -32,7 +33,7 @@ function RootStack() {
                 component={Home}
                 options={{ title: "March 2025" }}
             />
-            <Stack.Screen name="Workouts" component={Workouts} />
+            <Stack.Screen name="Settings" component={Settings} />
             <Stack.Screen name="Calendar" component={Calendar} />
         </Stack.Navigator>
     );
@@ -40,8 +41,10 @@ function RootStack() {
 
 export default function App() {
     return (
-        <NavigationContainer>
-            <RootStack />
-        </NavigationContainer>
+        <PaperProvider>
+            <NavigationContainer>
+                <RootStack />
+            </NavigationContainer>
+        </PaperProvider>
     )
 }
