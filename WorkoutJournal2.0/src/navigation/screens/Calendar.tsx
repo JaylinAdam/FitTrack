@@ -1,10 +1,13 @@
-import { Button, Text } from "@react-navigation/elements";
+import { Text } from "@react-navigation/elements";
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View} from "react-native";
 import { Calendar as CalComp } from "react-native-calendars";
 import { Session } from "../../../models/session";
-import { TextInput } from "react-native-gesture-handler";
+import { Exercise } from "../../../models/excercise";
+import { ExerciseInput } from "./components/ExerciseInput";
+import RoundIconBtn from "./components/RoundIconBtn";
+
 
 interface Day {
     dateString: string;
@@ -29,16 +32,18 @@ const formatDate = (date: Date) => {
 
 export function Calendar() {
     const navigation = useNavigation();
+
+    const [visible, setVisible] = useState(false)
+
     const [selected, setSelected] = useState("");
 
     const [sessions, setSessions] = useState<Session[]>([]);
 
     const [exercise, setExercise] = useState<Exercise>({
         name: "",
-        rep: "",
+        reps: "",
         sets: "",
-        comments: "",
-        weight: "",
+        info: "",
     });
     console.log(exercise);
 
@@ -48,7 +53,7 @@ export function Calendar() {
         setExercise({ ...exercise, [targetId]: newValue });
         console.log(exercise);
     };
-
+    
     const handleExSubmit = (event: any) => {
         const sessionIndex = sessions?.findIndex((s) => s.date === selected);
 
@@ -61,11 +66,23 @@ export function Calendar() {
             ];
             setSessions(sessionList);
         } else {
-            const newSession = new Session("adam", selected, "", [exercise]);
+            const newSession = new Session("", selected, "", [exercise]);
             setSessions([...sessions, newSession]);
         }
+
+        handleExClose(null)
         console.log(sessions);
     };
+
+    const handleExClose = (event: any) => {
+        setExercise ({
+            name: "",
+            info: "",
+            sets: "",
+            reps: "",
+        })
+        setVisible(false)
+    }
 
     const currentSession = () => {
         const currentIndex = sessions?.findIndex((s) => s.date === selected);
@@ -100,43 +117,34 @@ export function Calendar() {
                     }}
                 />
             </View>
-            <TextInput
-                id="name"
-                placeholder="name"
-                onChange={(event) => handleExChange(event)}
-                value={exercise?.name}
-            />
-            <TextInput
-                id="weight"
-                placeholder="weight"
-                onChange={(event) => handleExChange(event)}
-                value={exercise?.weight}
-            />
-            <TextInput
-                id="rep"
-                placeholder="rep"
-                onChange={(event) => handleExChange(event)}
-                value={exercise?.rep}
-            />
-            <TextInput
-                id="sets"
-                placeholder="sets"
-                onChange={(event) => handleExChange(event)}
-                value={exercise?.sets}
-            />
+            
+            <View style={[styles.exerciseWrapper, StyleSheet.absoluteFillObject]}>
+                <ExerciseInput
+                    exercise={exercise} 
+                    visible={visible} 
+                    change={handleExChange} 
+                    submit={handleExSubmit} 
+                    close={handleExClose}
+                />
 
-            <Button onPress={(event) => handleExSubmit(event)}>submit</Button>
+                {currentSession()?.exercises.map((e) => {
+                    return (
+                        <View style={styles.note}>
+                            <Text style={styles.title}>{e.name}</Text>
+                            <Text style={styles.desc}>{e.sets}x{e.reps}•{e.info}</Text>
+                        </View>
+                    );
+                })}
 
-            {currentSession()?.exercises.map((e) => {
-                return (
-                    <>
-                        <Text>{e.name}</Text>
-                        <Text>{e.rep}</Text>
-                        <Text>{e.sets}</Text>
-                        <Text>{e.weight}</Text>
-                    </>
-                );
-            })}
+                <RoundIconBtn 
+                    antIconName='plus' 
+                    size={40} 
+                    color="white" 
+                    bgColor={'#f4511e'} 
+                    style={styles.addBtn} 
+                    onPress={() => setVisible(true)}
+                />
+            </View>
         </View>
     );
 }
@@ -154,4 +162,27 @@ const styles = StyleSheet.create({
         overflow: "hidden",
         boxShadow: "0px 0px 3px #a3a3a3",
     },
+    exerciseWrapper: {
+        justifyContent: "flex-start",
+        alignItems: "baseline",
+        paddingTop: 370,
+        paddingLeft: 80,
+    },
+    addBtn: {
+        left: -70,
+        opacity: 0.9,
+        zIndex: 1,
+    },
+    note: {
+        padding: 8,
+        borderRadius: 10,
+        marginTop: 10,
+        boxShadow: "0px 0px 3px #a3a3a3",
+    },
+    title: {
+        fontSize: 20,
+    },
+    desc: {
+        fontSize: 16,
+    }
 });
