@@ -55,6 +55,11 @@ export function Calendar() {
     };
     
     const handleExSubmit = (event: any) => {
+        if (!exercise.name?.trim() && !exercise.reps?.trim() && !exercise.sets?.trim() && !exercise.info?.trim()) {
+            handleExClose(null)
+            return
+        }
+
         const sessionIndex = sessions?.findIndex((s) => s.date === selected);
 
         if (sessionIndex >= 0) {
@@ -170,6 +175,7 @@ const styles = StyleSheet.create({
     },
     addBtn: {
         left: -70,
+        paddingTop: 10,
         opacity: 0.9,
         zIndex: 1,
     },
