@@ -122,16 +122,16 @@ export function Calendar() {
                     }}
                 />
             </View>
-            
-            <View style={[styles.exerciseWrapper, StyleSheet.absoluteFillObject]}>
-                <ExerciseInput
-                    exercise={exercise} 
-                    visible={visible} 
-                    change={handleExChange} 
-                    submit={handleExSubmit} 
-                    close={handleExClose}
-                />
 
+            <ExerciseInput
+                exercise={exercise} 
+                visible={visible} 
+                change={handleExChange} 
+                submit={handleExSubmit} 
+                close={handleExClose}
+            />
+
+            <View style={[styles.exerciseWrapper, StyleSheet.absoluteFillObject]}>
                 {currentSession()?.exercises.map((e) => {
                     return (
                         <View style={styles.note}>
@@ -140,7 +140,6 @@ export function Calendar() {
                         </View>
                     );
                 })}
-
                 <RoundIconBtn 
                     antIconName='plus' 
                     size={40} 

@@ -117,7 +117,6 @@ const styles = StyleSheet.create({
         paddingVertical: 25,
     },
     dialogBG: {
-        flex: 1,
         zIndex: -1,
     },
 })
