@@ -1,18 +1,18 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { HeaderButton, Text } from '@react-navigation/elements';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { HeaderButton, Text } from '@react-navigation/elements'
 import {
   createStaticNavigation,
   StaticParamList,
-} from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Image } from 'react-native';
-import bell from '../assets/bell.png';
-import newspaper from '../assets/newspaper.png';
-import { Home } from './screens/Home';
-import { Profile } from './screens/Profile';
-import { Settings } from './screens/Settings';
-import { Updates } from './screens/Updates';
-import { NotFound } from './screens/NotFound';
+} from '@react-navigation/native'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { Image } from 'react-native'
+import bell from '../assets/bell.png'
+import newspaper from '../assets/newspaper.png'
+import { Home } from './screens/Home'
+import { Profile } from './screens/Profile'
+import { Settings } from './screens/Settings'
+import { Updates } from './screens/Updates'
+import { NotFound } from './screens/NotFound'
 
 const HomeTabs = createBottomTabNavigator({
   screens: {
@@ -71,7 +71,7 @@ const RootStack = createNativeStackNavigator({
         },
       },
     },
-    Settings: {
+    Workouts: {
       screen: Settings,
       options: ({ navigation }) => ({
         presentation: 'modal',

@@ -7,40 +7,18 @@ const GAP = 10; // Adjust gap size
 const CARD_WIDTH = width / 2 - GAP; // Subtract gap and divide by 2
 
 export function Home() {
-    const navigation = useNavigation();
+    const navigation = useNavigation()
 
     return (
         <View style={styles.container}>
-            <View style={styles.cardContainer}>
-                <Text style={styles.head1}>Sessions</Text>
-
-                <Text style={styles.head1}>30</Text>
-            </View>
-            <View style={styles.cardContainer}>
-                <Text style={styles.head1}>Sessions</Text>
-                <Text style={styles.head1}>30</Text>
-            </View>
-            <View style={styles.cardContainer}>
-                <Text style={styles.head1}>Sessions</Text>
-                <Text style={styles.head1}>30</Text>
-            </View>
-            <View style={styles.cardContainer}>
-                <Text style={styles.head1}>Sessions</Text>
-                <Text style={styles.head1}>30</Text>
-            </View>
-            <View style={styles.cardContainer}>
-                <Text style={styles.head1}>Sessions</Text>
-                <Text style={styles.head1}>30</Text>
-            </View>
-
             <Button onPress={() => navigation.navigate("Settings")}>
-                Go to Settings
+                View Settings
             </Button>
             <Button onPress={() => navigation.navigate("Calendar")}>
                 Go to Calendar
             </Button>
         </View>
-    );
+    )
 }
 
 const styles = StyleSheet.create({
@@ -62,4 +40,4 @@ const styles = StyleSheet.create({
         aspectRatio: 1, // Ensures square shape
         backgroundColor: "gray",
     },
-});
+})

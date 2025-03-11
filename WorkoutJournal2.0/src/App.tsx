@@ -1,15 +1,16 @@
-import * as React from "react";
-import { View, Text } from "react-native";
+import * as React from "react"
+import { View, Text } from "react-native"
 import {
     createStaticNavigation,
     NavigationContainer,
     useNavigation,
-} from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+} from "@react-navigation/native"
+import { createNativeStackNavigator } from "@react-navigation/native-stack"
+import { Settings } from "./navigation/screens/Settings"
+import { Home } from "./navigation/screens/Home" 
 import { Button } from "@react-navigation/elements";
-import { Settings } from "./navigation/screens/Settings";
-import { Home } from "./navigation/screens/Home";
 import { Calendar } from "./navigation/screens/Calendar";
+import { PaperProvider } from "react-native-paper"
 
 const Stack = createNativeStackNavigator();
 
@@ -40,8 +41,10 @@ function RootStack() {
 
 export default function App() {
     return (
-        <NavigationContainer>
-            <RootStack />
-        </NavigationContainer>
-    );
+        <PaperProvider>
+            <NavigationContainer>
+                <RootStack />
+            </NavigationContainer>
+        </PaperProvider>
+    )
 }
