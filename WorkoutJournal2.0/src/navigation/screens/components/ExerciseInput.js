@@ -1,24 +1,36 @@
-import { Keyboard, StyleSheet, TextInput, View , Text, TouchableWithoutFeedback} from 'react-native'
-import { Portal, Dialog } from 'react-native-paper'
-import RoundIconBtn from './RoundIconBtn'
+import {
+    Keyboard,
+    StyleSheet,
+    TextInput,
+    View,
+    Text,
+    TouchableWithoutFeedback,
+} from "react-native";
+import { Portal, Dialog } from "react-native-paper";
+import RoundIconBtn from "./RoundIconBtn";
 
-export function ExerciseInput({exercise, visible, change, submit, close}) {
-
+export function ExerciseInput({ exercise, visible, change, submit, close }) {
     const handleKeyClose = () => {
         Keyboard.dismiss();
-    }
+    };
 
-    return(
+    return (
         <>
             <Portal>
-                <Dialog style={styles.dialogWrapper} visible={visible} animationType="fade">
+                <Dialog
+                    style={styles.dialogWrapper}
+                    visible={visible}
+                    animationType="fade"
+                >
                     <View style={styles.container}>
                         <View style={styles.row}>
                             <View style={styles.columnLeft}>
                                 <Text style={styles.title}>Exercise</Text>
                                 <TextInput
                                     id="name"
-                                    onChange={(event) => change(event)}
+                                    onChangeText={(text) =>
+                                        change(text, "name")
+                                    }
                                     value={exercise?.name}
                                 />
                             </View>
@@ -26,7 +38,9 @@ export function ExerciseInput({exercise, visible, change, submit, close}) {
                                 <Text style={styles.title}>Info</Text>
                                 <TextInput
                                     id="info"
-                                    onChange={(event) => change(event)}
+                                    onChangeText={(text) =>
+                                        change(text, "info")
+                                    }
                                     value={exercise?.info}
                                 />
                             </View>
@@ -36,46 +50,60 @@ export function ExerciseInput({exercise, visible, change, submit, close}) {
                                 <Text style={styles.title}>Sets</Text>
                                 <TextInput
                                     id="sets"
-                                    onChange={(event) => change(event)}
+                                    keyboardType="numeric"
+                                    onChangeText={(text) =>
+                                        change(text, "sets")
+                                    }
                                     value={exercise?.sets}
                                 />
-                            </View>    
+                            </View>
                             <View style={styles.columnRight}>
                                 <Text style={styles.title}>Reps</Text>
                                 <TextInput
                                     id="reps"
-                                    onChange={(event) => change(event)}
+                                    keyboardType="numeric"
+                                    onChangeText={(text) =>
+                                        change(text, "reps")
+                                    }
                                     value={exercise?.reps}
                                 />
-                            </View>   
-                        </View> 
+                            </View>
+                        </View>
                         <View style={styles.btnContainer}>
-                            <RoundIconBtn 
+                            <RoundIconBtn
                                 size={25}
-                                color={'white'}
-                                bgColor={'green'}
-                                antIconName='check' 
+                                color={"white"}
+                                bgColor={"green"}
+                                antIconName="check"
                                 onPress={submit}
                             />
-                            {(exercise.name.trim() || exercise.info.trim() || exercise.sets.trim() || exercise.reps.trim()) && (
-                                <RoundIconBtn 
+                            {(exercise.name.trim() ||
+                                exercise.info.trim() ||
+                                exercise.sets.trim() ||
+                                exercise.reps.trim()) && (
+                                <RoundIconBtn
                                     size={25}
-                                    style={{marginLeft: 15}}    
-                                    antIconName='close' 
-                                    color={'white'}
-                                    bgColor={'red'}
+                                    style={{ marginLeft: 15 }}
+                                    antIconName="close"
+                                    color={"white"}
+                                    bgColor={"red"}
                                     onPress={close}
                                 />
                             )}
                         </View>
                     </View>
                     <TouchableWithoutFeedback onPress={handleKeyClose}>
-                        <View style={[styles.dialogBG, StyleSheet.absoluteFillObject]}/>
+                        <View
+                            style={[
+                                styles.dialogBG,
+                                StyleSheet.absoluteFillObject,
+                            ]}
+                        />
                     </TouchableWithoutFeedback>
                 </Dialog>
             </Portal>
         </>
-    )
+    );
 }
 
 const styles = StyleSheet.create({
@@ -87,8 +115,8 @@ const styles = StyleSheet.create({
         paddingTop: 20,
     },
     row: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
+        flexDirection: "row",
+        justifyContent: "space-between",
     },
     columnLeft: {
         flex: 1,
@@ -100,23 +128,23 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 20,
-        fontInfo: 'bold',
+        fontInfo: "bold",
         marginBottom: 5,
     },
     input: {
         fontSize: 20,
-        color: 'black',
+        color: "black",
         borderWidth: 2,
         borderRadius: 10,
         padding: 10,
-        borderBottomColor: 'black',
+        borderBottomColor: "black",
     },
     btnContainer: {
-        flexDirection: 'row',
-        justifyContent: 'center',
+        flexDirection: "row",
+        justifyContent: "center",
         paddingVertical: 25,
     },
     dialogBG: {
         zIndex: -1,
     },
-})
+});
