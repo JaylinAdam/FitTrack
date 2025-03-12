@@ -1,5 +1,5 @@
 // libraries
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import {
     Keyboard,
     StyleSheet,
