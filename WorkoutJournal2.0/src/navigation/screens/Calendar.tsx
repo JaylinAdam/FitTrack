@@ -143,7 +143,6 @@ const createStyles = (theme: Theme) =>
             backgroundColor: theme.background.secondary,
         },
         notesWrapper: { width: '100%' },
-
         exerciseWrapper: {
             justifyContent: 'flex-start',
             alignItems: 'baseline',
