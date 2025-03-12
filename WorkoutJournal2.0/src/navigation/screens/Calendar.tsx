@@ -1,14 +1,18 @@
-import { Text } from '@react-navigation/elements';
-import { useNavigation } from '@react-navigation/native';
-import { useCallback, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+// libraries
+import React, { useMemo } from 'react';
+import { ScrollView, StyleSheet, View } from 'react-native';
+
+// import { useNavigation } from '@react-navigation/native';
 import { Calendar as CalComp } from 'react-native-calendars';
-import { Session } from '../../../models/session';
-import { Exercise } from '../../../models/excercise';
-import { ExerciseInput } from './components/ExerciseInput';
-import RoundIconBtn from './components/RoundIconBtn';
+
+// context
+import { useApp, Theme, useTheme } from '../../Context';
+
+// components
+import { ExerciseInputModal, Icon, ExerciseCard } from './components';
 
 interface Day {
+    // interface of data returned from calendar onPress
     dateString: string;
     day: number;
     month: number;
@@ -16,183 +20,151 @@ interface Day {
     year: 2025;
 }
 
-const currentDate = () => {
-    const now = new Date();
-    return formatDate(now);
-};
-const formatDate = (date: Date) => {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
-    const day = String(date.getDate()).padStart(2, '0');
-    console.log(`${year}-${month}-${day}`);
-    return `${year}-${month}-${day}`;
-};
-const CURRENT_DATE = currentDate();
+export const Calendar = () => {
+    // const navigation = useNavigation();
+    const { theme } = useTheme();
 
-export function Calendar() {
-    const navigation = useNavigation();
+    const styles = useMemo(() => createStyles(theme), [theme]);
 
-    const [visible, setVisible] = useState(false);
+    const {
+        selected,
+        setSelected,
+        sessions,
+        targetSession,
+        CURRENT_DATE,
+        setVisible,
+    } = useApp();
 
-    const [selected, setSelected] = useState('');
+    const formattedMarkedList = () => {
+        const formatted: any = {
+            [selected]: {
+                selected: true,
+                disableTouchEvent: true,
+            },
+        };
+        sessions.forEach(s => {
+            const focusMonth = s.date.split('-')[1];
+            const currentMonth = CURRENT_DATE.split('-')[1];
 
-    const [sessions, setSessions] = useState<Session[]>([]);
-
-    const [exercise, setExercise] = useState<Exercise>({
-        name: '',
-        reps: '',
-        sets: '',
-        info: '',
-    });
-
-    const handleExChange = useCallback((value: string, id: string) => {
-        setExercise({ ...exercise, [id]: value });
-    }, []);
-
-    const handleExSubmit = (event: any) => {
-        if (
-            !exercise.name?.trim() &&
-            !exercise.reps?.trim() &&
-            !exercise.sets?.trim() &&
-            !exercise.info?.trim()
-        ) {
-            handleExClose(null);
-            return;
-        }
-
-        const sessionIndex = sessions?.findIndex(s => s.date === selected);
-
-        if (sessionIndex >= 0) {
-            const sessionList = [...sessions];
-
-            sessionList[sessionIndex].exercises = [
-                ...sessionList[sessionIndex].exercises,
-                exercise,
-            ];
-            setSessions(sessionList);
-        } else {
-            const newSession = new Session('', selected, '', [exercise]);
-            setSessions([...sessions, newSession]);
-        }
-
-        handleExClose(null);
-        console.log(sessions);
-    };
-
-    const handleExClose = (event: any) => {
-        setExercise({
-            name: '',
-            info: '',
-            sets: '',
-            reps: '',
+            if (s.date.length > 0 && focusMonth === currentMonth) {
+                formatted[s.date.toString()] = {
+                    ...formatted[s.date.toString()],
+                    marked: true,
+                };
+            }
         });
-        setVisible(false);
-    };
-
-    const currentSession = () => {
-        const currentIndex = sessions?.findIndex(s => s.date === selected);
-        return sessions[currentIndex];
+        return formatted;
     };
 
     return (
-        <View style={styles.container}>
-            <View style={styles.calendarWrapper}>
-                <CalComp
-                    theme={{
-                        backgroundColor: '#ffffff',
-                        calendarBackground: '#ffffff',
-                        textSectionTitleColor: '#00adf5',
-                        selectedDayBackgroundColor: '#00adf5',
-                        selectedDayTextColor: '#ffffff',
-                        todayTextColor: '#00adf5',
-                        dayTextColor: '#2d4150',
-                        textDisabledColor: '#a3b8cc',
-                    }}
-                    current={CURRENT_DATE}
-                    onDayPress={(day: Day) => {
-                        setSelected(day.dateString);
-                    }}
-                    markedDates={{
-                        [selected]: {
-                            selected: true,
-
-                            disableTouchEvent: true,
-                            selectedDotColor: 'orange',
-                        },
-                    }}
-                />
-            </View>
-
-            <View style={styles.notesWrapper}>
-                <RoundIconBtn
-                    antIconName="plus"
-                    size={40}
-                    color="white"
-                    bgColor={'#f4511e'}
-                    style={styles.addBtn}
-                    onPress={() => setVisible(true)}
-                />
-
-                {currentSession()?.exercises.map(e => {
-                    return (
-                        <View style={styles.note}>
-                            <Text style={styles.title}>{e.name}</Text>
-                            <Text style={styles.desc}>
-                                {e.sets}x{e.reps}•{e.info}
-                            </Text>
-                        </View>
-                    );
-                })}
-            </View>
-
-            <View
-                style={[styles.exerciseWrapper, StyleSheet.absoluteFillObject]}
+        <>
+            <ScrollView
+                showsVerticalScrollIndicator={false}
+                style={styles.scrollView}
             >
-                <ExerciseInput
-                    exercise={exercise}
-                    visible={visible}
-                    change={handleExChange}
-                    submit={handleExSubmit}
-                    close={handleExClose}
-                />
-            </View>
-        </View>
-    );
-}
+                <View style={styles.container}>
+                    <View style={styles.calendarWrapper}>
+                        <CalComp
+                            theme={{
+                                backgroundColor: theme.background.secondary,
+                                calendarBackground: theme.background.secondary,
+                                textSectionTitleColor: theme.text.accent,
+                                monthTextColor: theme.text.accent,
+                                textMonthFontWeight: 500,
+                                textMonthFontSize: 18,
+                                selectedDayBackgroundColor: theme.text.accent,
+                                selectedDayTextColor: theme.text.primary,
+                                todayTextColor: theme.text.accent,
+                                dayTextColor: theme.text.primary,
+                                textDisabledColor: theme.text.tertiary,
+                                textInactiveColor: theme.text.tertiary,
+                            }}
+                            current={CURRENT_DATE}
+                            onDayPress={(day: Day) => {
+                                setSelected(day.dateString);
+                            }}
+                            markedDates={{ ...formattedMarkedList() }}
+                        />
+                    </View>
+                </View>
+                <View style={styles.notesWrapper}>
+                    <Icon
+                        antIconName="plus"
+                        size={40}
+                        color="white"
+                        bgColor={'#f4511e'}
+                        style={styles.addBtn}
+                        onPress={() => setVisible(true)}
+                    />
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        flexDirection: 'column',
-        alignItems: 'center',
-        padding: 10,
-    },
-    notesWrapper: { width: '100%' },
-    calendarWrapper: {
-        width: '100%',
-        borderRadius: 15,
-        overflow: 'hidden',
-        boxShadow: '0px 0px 3px #a3a3a3',
-    },
-    exerciseWrapper: {
-        justifyContent: 'flex-start',
-        alignItems: 'baseline',
-    },
-    addBtn: {
-        paddingTop: 10,
-        opacity: 0.9,
-        zIndex: 1,
-    },
-    note: {
-        padding: 8,
-        borderRadius: 10,
-        marginTop: 10,
-        boxShadow: '0px 0px 3px #a3a3a3',
-    },
-    title: {
-        fontSize: 20,
-    },
-    desc: {
-        fontSize: 16,
-    },
-});
+                    {targetSession?.exercises.map((e, index) => {
+                        const key = `${e.name}1`;
+                        return (
+                            <ExerciseCard
+                                key={key}
+                                name={e.name}
+                                info={e.info}
+                                sets={e.sets}
+                                reps={e.reps}
+                            />
+                        );
+                    })}
+                </View>
+                <View>
+                    <View
+                        style={[
+                            styles.exerciseWrapper,
+                            StyleSheet.absoluteFillObject,
+                        ]}
+                    >
+                        <ExerciseInputModal />
+                    </View>
+                </View>
+            </ScrollView>
+        </>
+    );
+};
+
+const createStyles = (theme: Theme) =>
+    StyleSheet.create({
+        scrollView: { padding: 10 },
+        container: {
+            flex: 1,
+            flexDirection: 'column',
+            alignItems: 'center',
+        },
+        calendarWrapper: {
+            width: '100%',
+            borderRadius: 15,
+            overflow: 'hidden',
+            boxShadow: '0px 0px 3px #a3a3a3',
+            paddingBottom: 10,
+            marginBottom: 10,
+            backgroundColor: theme.background.secondary,
+        },
+        notesWrapper: { width: '100%' },
+
+        exerciseWrapper: {
+            justifyContent: 'flex-start',
+            alignItems: 'baseline',
+        },
+        addBtn: {
+            paddingTop: 10,
+            opacity: 0.9,
+            zIndex: 1,
+        },
+        note: {
+            padding: 8,
+            borderRadius: 10,
+            marginTop: 10,
+            boxShadow: '0px 0px 3px #a3a3a3',
+        },
+        title: {
+            fontSize: 20,
+            color: theme.text.primary,
+        },
+        desc: {
+            fontSize: 16,
+            color: theme.text.secondary,
+        },
+    });

@@ -1,4 +1,4 @@
-import { Exercise } from "./excercise";
+import { Exercise } from './';
 
 export class Session {
     user: string;
@@ -10,7 +10,7 @@ export class Session {
         user: string,
         date: string,
         notes: string,
-        exercises: Exercise[]
+        exercises: Exercise[],
     ) {
         this.user = user;
         this.date = date;

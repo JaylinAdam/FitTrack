@@ -1,37 +1,61 @@
-import * as React from "react"
-import { View, Text } from "react-native"
-import {
-    createStaticNavigation,
-    NavigationContainer,
-    useNavigation,
-} from "@react-navigation/native"
-import { createNativeStackNavigator } from "@react-navigation/native-stack"
-import { Settings } from "./navigation/screens/Settings"
-import { Home } from "./navigation/screens/Home" 
-import { Button } from "@react-navigation/elements";
-import { Calendar } from "./navigation/screens/Calendar";
-import { PaperProvider } from "react-native-paper"
+import React, { useState, useMemo } from 'react';
+import { View, Switch } from 'react-native';
+import { PaperProvider } from 'react-native-paper';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { Settings } from './navigation/screens/Settings';
+import { Home } from './navigation/screens/Home';
+import { Calendar } from './navigation/screens/Calendar';
+import { AppProvider, ThemeProvider, useTheme } from './Context/';
 
 const Stack = createNativeStackNavigator();
 
 function RootStack() {
+    const { theme, toggleTheme } = useTheme();
+    const [enabled, setEnabled] = useState(false);
+
+    const handleSwitch = () => {
+        setEnabled(!enabled);
+        toggleTheme();
+    };
+
+    const screenOptions = useMemo(
+        () => ({
+            headerStyle: {
+                backgroundColor: theme.background.primary,
+            },
+            headerShadowVisible: false,
+            headerTintColor: theme.text.primary,
+            headerTitleStyle: {
+                fontWeight: 'bold',
+            },
+            contentStyle: {
+                backgroundColor: theme.background.primary,
+            },
+        }),
+        [theme],
+    );
+
     return (
-        <Stack.Navigator
-            initialRouteName="Home"
-            screenOptions={{
-                headerStyle: {
-                    backgroundColor: "#00284e",
-                },
-                headerTintColor: "#fff",
-                headerTitleStyle: {
-                    fontWeight: "bold",
-                },
-            }}
-        >
+        <Stack.Navigator initialRouteName="Home" screenOptions={screenOptions}>
             <Stack.Screen
                 name="Home"
                 component={Home}
-                options={{ title: "March 2025" }}
+                options={({ navigation }) => ({
+                    title: 'March 2025',
+                    headerRight: () => (
+                        <View style={{ paddingRight: 16 }}>
+                            {/* <Button onPress={() => navigation.navigate("Calendar")}>
+                Calender
+              </Button> */}
+                            <Switch
+                                value={enabled}
+                                onValueChange={handleSwitch}
+                            />
+                        </View>
+                    ),
+                })}
             />
             <Stack.Screen name="Settings" component={Settings} />
             <Stack.Screen name="Calendar" component={Calendar} />
@@ -41,10 +65,16 @@ function RootStack() {
 
 export default function App() {
     return (
-        <PaperProvider>
-            <NavigationContainer>
-                <RootStack />
-            </NavigationContainer>
-        </PaperProvider>
-    )
+        <ThemeProvider>
+            <AppProvider>
+                <PaperProvider>
+                    <GestureHandlerRootView>
+                        <NavigationContainer>
+                            <RootStack />
+                        </NavigationContainer>
+                    </GestureHandlerRootView>
+                </PaperProvider>
+            </AppProvider>
+        </ThemeProvider>
+    );
 }
