@@ -109,13 +109,8 @@ export const Calendar = () => {
                     />
                 </View>
                 <View>
-                    <View
-                        style={[
-                            styles.exerciseWrapper,
-                            StyleSheet.absoluteFillObject,
-                        ]}
-                    >
-                        <ExerciseInputModal />
+                    <View style={[StyleSheet.absoluteFillObject]}>
+                        <ExerciseInputModal/>
                     </View>
                 </View>
             </ScrollView>
@@ -140,15 +135,13 @@ const createStyles = (theme: Theme) =>
             marginBottom: 3,
             backgroundColor: theme.background.secondary,
         },
-        notesWrapper: { width: '100%' },
-        exerciseWrapper: {
-            justifyContent: 'flex-end',
+        notesWrapper: {
+            marginLeft: 58,
             alignItems: 'baseline',
         },
         icon: {
             marginTop: 10,
             backgroundColor: '#f4511e',
-            
         },
         note: {
             borderRadius: 10,
