@@ -137,7 +137,7 @@ const createStyles = (theme: Theme) =>
             overflow: 'hidden',
             boxShadow: '0px 0px 3px #a3a3a3',
             paddingBottom: 10,
-            marginBottom: 10,
+            marginBottom: 3,
             backgroundColor: theme.background.secondary,
         },
         notesWrapper: { width: '100%' },
@@ -146,13 +146,11 @@ const createStyles = (theme: Theme) =>
             alignItems: 'baseline',
         },
         icon: {
-            paddingTop: 10,
-            zIndex: 1,
-            justifyContent: 'center',
+            marginTop: 10,
             backgroundColor: '#f4511e',
+            
         },
         note: {
-            padding: 8,
             borderRadius: 10,
             marginTop: 10,
             boxShadow: '0px 0px 3px #a3a3a3',
