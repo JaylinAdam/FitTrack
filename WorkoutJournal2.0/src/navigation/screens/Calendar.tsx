@@ -88,15 +88,6 @@ export const Calendar = () => {
                     </View>
                 </View>
                 <View style={styles.notesWrapper}>
-                    <Icon
-                        antIconName="plus"
-                        size={40}
-                        color="white"
-                        bgColor={'#f4511e'}
-                        style={styles.addBtn}
-                        onPress={() => setVisible(true)}
-                    />
-
                     {targetSession?.exercises.map((e, index) => {
                         const key = `${e.name}1`;
                         return (
@@ -109,6 +100,13 @@ export const Calendar = () => {
                             />
                         );
                     })}
+                    <Icon
+                        antIconName="plus"
+                        size={40}
+                        color={theme.text.primary}
+                        style={styles.icon}
+                        onPress={() => setVisible(true)}
+                    />
                 </View>
                 <View>
                     <View
@@ -144,13 +142,14 @@ const createStyles = (theme: Theme) =>
         },
         notesWrapper: { width: '100%' },
         exerciseWrapper: {
-            justifyContent: 'flex-start',
+            justifyContent: 'flex-end',
             alignItems: 'baseline',
         },
-        addBtn: {
+        icon: {
             paddingTop: 10,
-            opacity: 0.9,
             zIndex: 1,
+            justifyContent: 'center',
+            backgroundColor: '#f4511e',
         },
         note: {
             padding: 8,

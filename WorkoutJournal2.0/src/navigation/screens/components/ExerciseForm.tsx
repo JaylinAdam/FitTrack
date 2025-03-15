@@ -70,19 +70,18 @@ export const ExerciseForm = () => {
                     name,
                 }) && (
                     <Icon
-                        size={25}
-                        color={'white'}
-                        bgColor={'green'}
                         antIconName="check"
+                        size={25}
+                        style={styles.submitIcon}
+                        color={'white'}
                         onPress={handleSubmit}
                     />
                 )}
                 <Icon
-                    size={25}
-                    style={{ marginLeft: 15 }}
                     antIconName="close"
+                    size={25}
+                    style={styles.closeIcon}
                     color={'white'}
-                    bgColor={'red'}
                     onPress={handleClose}
                 />
             </View>
@@ -112,5 +111,12 @@ const createStyles = (theme: Theme) =>
             flexDirection: 'row',
             justifyContent: 'center',
             paddingVertical: 25,
+        },
+        submitIcon: {
+            backgroundColor: '#34B223',
+            marginRight: 15,
+        },
+        closeIcon: {
+            backgroundColor: '#E3252B',
         },
     });

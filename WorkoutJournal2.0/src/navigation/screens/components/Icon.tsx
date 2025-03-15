@@ -5,10 +5,9 @@ import { AntDesign } from '@expo/vector-icons';
 interface Props {
     antIconName: any;
     size: number;
-    color: string;
+    color: string | undefined;
     style?: any;
     onPress: () => void;
-    bgColor: string;
 }
 
 export const Icon = ({
@@ -17,7 +16,6 @@ export const Icon = ({
     color,
     style,
     onPress,
-    bgColor,
 }: Props) => {
     return (
         <AntDesign
@@ -25,7 +23,6 @@ export const Icon = ({
             size={size}
             color={color}
             style={[styles.icon, { ...style }]}
-            backgroundColor={bgColor}
             onPress={onPress}
         />
     );
@@ -36,6 +33,5 @@ const styles = StyleSheet.create({
         padding: 8,
         borderRadius: 50,
         elevation: 5,
-        opacity: 0.55,
     },
 });
