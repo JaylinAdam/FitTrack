@@ -103,14 +103,15 @@ export const Calendar = () => {
                     <Icon
                         antIconName="plus"
                         size={40}
-                        color={theme.text.primary}
-                        style={styles.icon}
+                        color={theme.text.quaternary}
+                        bgColor={theme.background.add}
+                        style={styles.addIcon}
                         onPress={() => setVisible(true)}
                     />
                 </View>
                 <View>
                     <View style={[StyleSheet.absoluteFillObject]}>
-                        <ExerciseInputModal/>
+                        <ExerciseInputModal />
                     </View>
                 </View>
             </ScrollView>
@@ -139,10 +140,7 @@ const createStyles = (theme: Theme) =>
             marginLeft: 58,
             alignItems: 'baseline',
         },
-        icon: {
-            marginTop: 10,
-            backgroundColor: '#f4511e',
-        },
+        addIcon: { marginTop: 10 },
         note: {
             borderRadius: 10,
             marginTop: 10,
