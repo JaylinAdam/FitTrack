@@ -26,12 +26,12 @@ export const Icon = ({
         () => createStyles(theme, bgColor),
         [bgColor, theme],
     );
-    
+
     return (
         <AntDesign
             name={antIconName}
             size={size ? size : 40}
-            color={color ? color : theme.text.primary}
+            color={color ? color : theme.text.quaternary}
             style={[styles.icon, { ...style }]}
             onPress={onPress}
         />
@@ -40,10 +40,10 @@ export const Icon = ({
 
 const createStyles = (theme: Theme, bgColor?: string) =>
     StyleSheet.create({
-    icon: {
-        padding: 8,
-        borderRadius: 50,
-        elevation: 5,
-        backgroundColor: bgColor ? bgColor : theme.background.primary,
-    },
-});
+        icon: {
+            padding: 8,
+            borderRadius: 50,
+            elevation: 5,
+            backgroundColor: bgColor ? bgColor : theme.background.primary,
+        },
+    });
