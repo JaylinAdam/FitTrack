@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { StyleSheet } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
+import { Theme, useTheme } from '../../../Context';
 
 interface Props {
     antIconName: any;
     size: number;
     color: string | undefined;
+    bgColor: string | undefined;
     style?: any;
     onPress: () => void;
 }
@@ -14,24 +16,34 @@ export const Icon = ({
     antIconName,
     size,
     color,
+    bgColor,
     style,
     onPress,
 }: Props) => {
+    const { theme } = useTheme();
+
+    const styles = useMemo(
+        () => createStyles(theme, bgColor),
+        [bgColor, theme],
+    );
+    
     return (
         <AntDesign
             name={antIconName}
-            size={size}
-            color={color}
+            size={size ? size : 40}
+            color={color ? color : theme.text.primary}
             style={[styles.icon, { ...style }]}
             onPress={onPress}
         />
     );
 };
 
-const styles = StyleSheet.create({
+const createStyles = (theme: Theme, bgColor?: string) =>
+    StyleSheet.create({
     icon: {
         padding: 8,
         borderRadius: 50,
         elevation: 5,
+        backgroundColor: bgColor ? bgColor : theme.background.primary,
     },
 });
