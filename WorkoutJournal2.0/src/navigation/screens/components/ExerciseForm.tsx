@@ -73,7 +73,8 @@ export const ExerciseForm = () => {
                         antIconName="check"
                         size={25}
                         style={styles.submitIcon}
-                        color={'white'}
+                        color={theme.text.quaternary}
+                        bgColor={theme.background.submit}
                         onPress={handleSubmit}
                     />
                 )}
@@ -81,7 +82,8 @@ export const ExerciseForm = () => {
                     antIconName="close"
                     size={25}
                     style={styles.closeIcon}
-                    color={'white'}
+                    color={theme.text.quaternary}
+                    bgColor={theme.background.close}
                     onPress={handleClose}
                 />
             </View>
@@ -113,10 +115,9 @@ const createStyles = (theme: Theme) =>
             paddingVertical: 25,
         },
         submitIcon: {
-            backgroundColor: '#34B223',
             marginRight: 15,
         },
         closeIcon: {
-            backgroundColor: '#E3252B',
+            backgroundColor: theme.background.close,
         },
     });
