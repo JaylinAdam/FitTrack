@@ -18,6 +18,7 @@ type Theme = {
         primary?: string;
         secondary?: string;
         tertiary?: string;
+        add?: string;
     };
 };
 
@@ -30,6 +31,7 @@ const themes = {
         background: {
             primary: '#ffffff',
             secondary: '#ffffff',
+            add: '#f4511e',
         },
     },
     dark: {
@@ -43,6 +45,7 @@ const themes = {
             primary: '#101518',
             secondary: '#1a2227',
             tertiary: '#33424b',
+            add: '#f4511e',
         },
     },
 };
