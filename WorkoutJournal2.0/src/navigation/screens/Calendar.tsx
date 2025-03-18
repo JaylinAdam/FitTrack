@@ -102,9 +102,7 @@ export const Calendar = () => {
                     })}
                     <Icon
                         antIconName="plus"
-                        size={40}
-                        color={theme.text.quaternary}
-                        bgColor={theme.background.add}
+                        bgColor={theme.button.add}
                         style={styles.addIcon}
                         onPress={() => setVisible(true)}
                     />
