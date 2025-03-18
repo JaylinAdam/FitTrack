@@ -19,9 +19,11 @@ type Theme = {
         primary?: string;
         secondary?: string;
         tertiary?: string;
+    };
+    button: {
         add?: string;
-        submit? : string;
-        close? : string;
+        submit?: string;
+        close?: string;
     };
 };
 
@@ -30,11 +32,13 @@ const themes = {
         text: {
             primary: '#000000',
             secondary: '#000000',
-            quaternary: '#ffffff',
+            quaternary: '#ffffff', // flip of theme
         },
         background: {
             primary: '#ffffff',
             secondary: '#ffffff',
+        },
+        button: {
             add: '#f4511e',
             submit: '#34B223',
             close: '#E3252B',
@@ -52,6 +56,8 @@ const themes = {
             primary: '#101518',
             secondary: '#1a2227',
             tertiary: '#33424b',
+        },
+        button: {
             add: '#f4511e',
             submit: '#34B223',
             close: '#E3252B',
