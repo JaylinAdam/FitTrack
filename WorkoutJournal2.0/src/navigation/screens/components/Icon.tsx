@@ -5,9 +5,9 @@ import { Theme, useTheme } from '../../../Context';
 
 interface Props {
     antIconName: any;
-    size: number;
-    color: string | undefined;
-    bgColor: string | undefined;
+    size?: number;
+    color?: string;
+    bgColor?: string;
     style?: any;
     onPress: () => void;
 }
