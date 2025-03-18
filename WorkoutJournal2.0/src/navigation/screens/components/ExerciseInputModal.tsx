@@ -1,17 +1,11 @@
 // libraries
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import {
     Keyboard,
     StyleSheet,
-    TextInput,
-    View,
-    Text,
     TouchableWithoutFeedback,
 } from 'react-native';
 import { Portal, Dialog } from 'react-native-paper';
-
-// models
-import { Exercise } from '../../../../models';
 
 //context
 import { useApp, Theme, useTheme } from '../../../Context/';

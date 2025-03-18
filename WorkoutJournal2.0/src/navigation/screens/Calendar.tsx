@@ -88,15 +88,6 @@ export const Calendar = () => {
                     </View>
                 </View>
                 <View style={styles.notesWrapper}>
-                    <Icon
-                        antIconName="plus"
-                        size={40}
-                        color="white"
-                        bgColor={'#f4511e'}
-                        style={styles.addBtn}
-                        onPress={() => setVisible(true)}
-                    />
-
                     {targetSession?.exercises.map((e, index) => {
                         const key = `${e.name}1`;
                         return (
@@ -109,14 +100,15 @@ export const Calendar = () => {
                             />
                         );
                     })}
+                    <Icon
+                        antIconName="plus"
+                        bgColor={theme.button.add}
+                        style={styles.addIcon}
+                        onPress={() => setVisible(true)}
+                    />
                 </View>
                 <View>
-                    <View
-                        style={[
-                            styles.exerciseWrapper,
-                            StyleSheet.absoluteFillObject,
-                        ]}
-                    >
+                    <View style={[StyleSheet.absoluteFillObject]}>
                         <ExerciseInputModal />
                     </View>
                 </View>
@@ -139,22 +131,15 @@ const createStyles = (theme: Theme) =>
             overflow: 'hidden',
             boxShadow: '0px 0px 3px #a3a3a3',
             paddingBottom: 10,
-            marginBottom: 10,
+            marginBottom: 3,
             backgroundColor: theme.background.secondary,
         },
-        notesWrapper: { width: '100%' },
-
-        exerciseWrapper: {
-            justifyContent: 'flex-start',
+        notesWrapper: {
+            marginLeft: 58,
             alignItems: 'baseline',
         },
-        addBtn: {
-            paddingTop: 10,
-            opacity: 0.9,
-            zIndex: 1,
-        },
+        addIcon: { marginTop: 10 },
         note: {
-            padding: 8,
             borderRadius: 10,
             marginTop: 10,
             boxShadow: '0px 0px 3px #a3a3a3',

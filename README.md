@@ -15,6 +15,18 @@ _How to create branch_
 
 -   git checkout -b "branch name"
 
+_How to rename branch_
+
+-   git branch -m "new branch name"
+
+_How to delete local branch_
+
+-   git branch -d "branch name"
+
+_How to delete remote branch_
+
+-   git push origin :"branch name"
+
 _How to see branches on local machine_
 
 -   git branch
