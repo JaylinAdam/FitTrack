@@ -107,11 +107,7 @@ export const Calendar = () => {
                         onPress={() => setVisible(true)}
                     />
                 </View>
-                <View>
-                    <View style={[StyleSheet.absoluteFillObject]}>
-                        <ExerciseInputModal />
-                    </View>
-                </View>
+                <ExerciseInputModal />
             </ScrollView>
         </>
     );
