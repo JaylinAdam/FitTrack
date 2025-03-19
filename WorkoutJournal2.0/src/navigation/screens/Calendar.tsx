@@ -57,63 +57,57 @@ export const Calendar = () => {
     };
 
     return (
-        <>
-            <ScrollView
-                showsVerticalScrollIndicator={false}
-                style={styles.scrollView}
-            >
-                <View style={styles.container}>
-                    <View style={styles.calendarWrapper}>
-                        <CalComp
-                            theme={{
-                                backgroundColor: theme.background.secondary,
-                                calendarBackground: theme.background.secondary,
-                                textSectionTitleColor: theme.text.accent,
-                                monthTextColor: theme.text.accent,
-                                textMonthFontWeight: 500,
-                                textMonthFontSize: 18,
-                                selectedDayBackgroundColor: theme.text.accent,
-                                selectedDayTextColor: theme.text.primary,
-                                todayTextColor: theme.text.accent,
-                                dayTextColor: theme.text.primary,
-                                textDisabledColor: theme.text.tertiary,
-                                textInactiveColor: theme.text.tertiary,
-                            }}
-                            current={CURRENT_DATE}
-                            onDayPress={(day: Day) => {
-                                setSelected(day.dateString);
-                            }}
-                            markedDates={{ ...formattedMarkedList() }}
-                        />
-                    </View>
-                </View>
-                <View style={styles.notesWrapper}>
-                    {targetSession?.exercises.map((e, index) => {
-                        const key = `${e.name}1`;
-                        return (
-                            <ExerciseCard
-                                key={key}
-                                name={e.name}
-                                info={e.info}
-                                sets={e.sets}
-                                reps={e.reps}
-                            />
-                        );
-                    })}
-                    <Icon
-                        antIconName="plus"
-                        bgColor={theme.button.add}
-                        style={styles.addIcon}
-                        onPress={() => setVisible(true)}
+        <ScrollView
+            showsVerticalScrollIndicator={false}
+            style={styles.scrollView}
+        >
+            <View style={styles.container}>
+                <View style={styles.calendarWrapper}>
+                    <CalComp
+                        theme={{
+                            backgroundColor: theme.background.secondary,
+                            calendarBackground: theme.background.secondary,
+                            textSectionTitleColor: theme.text.accent,
+                            monthTextColor: theme.text.accent,
+                            textMonthFontWeight: 500,
+                            textMonthFontSize: 18,
+                            selectedDayBackgroundColor: theme.text.accent,
+                            selectedDayTextColor: theme.text.primary,
+                            todayTextColor: theme.text.accent,
+                            dayTextColor: theme.text.primary,
+                            textDisabledColor: theme.text.tertiary,
+                            textInactiveColor: theme.text.tertiary,
+                        }}
+                        current={CURRENT_DATE}
+                        onDayPress={(day: Day) => {
+                            setSelected(day.dateString);
+                        }}
+                        markedDates={{ ...formattedMarkedList() }}
                     />
                 </View>
-                <View>
-                    <View style={[StyleSheet.absoluteFillObject]}>
-                        <ExerciseInputModal />
-                    </View>
-                </View>
-            </ScrollView>
-        </>
+            </View>
+            <View style={styles.notesWrapper}>
+                {targetSession?.exercises.map((e, index) => {
+                    const key = `${e.name}1`;
+                    return (
+                        <ExerciseCard
+                            key={key}
+                            name={e.name}
+                            info={e.info}
+                            sets={e.sets}
+                            reps={e.reps}
+                        />
+                    );
+                })}
+                <Icon
+                    antIconName="plus"
+                    bgColor={theme.button.add}
+                    style={styles.addIcon}
+                    onPress={() => setVisible(true)}
+                />
+            </View>
+            <ExerciseInputModal />
+        </ScrollView>
     );
 };
 
