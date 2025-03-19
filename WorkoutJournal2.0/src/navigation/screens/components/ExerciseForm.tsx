@@ -5,8 +5,8 @@ import { Icon, Input } from '.';
 import { Exercise } from '../../../../models';
 
 export const ExerciseForm = () => {
-    const { theme } = useTheme();
     const { setVisible, hasValue, handleExSubmit, TARGET_DATE } = useApp();
+    const { theme } = useTheme();
 
     const styles = useMemo(() => createStyles(theme), [theme]);
 

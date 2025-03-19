@@ -98,7 +98,7 @@ export const Calendar = () => {
                     />
 
                     {targetSession?.exercises.map((e, index) => {
-                        const key = `${e.name}1`;
+                        const key = `${e.name}${index}`;
                         return (
                             <ExerciseCard
                                 key={key}

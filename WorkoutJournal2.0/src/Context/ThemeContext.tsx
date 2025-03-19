@@ -26,10 +26,14 @@ const themes = {
         text: {
             primary: '#000000',
             secondary: '#000000',
+            tertiary: '',
+            accent: '',
         },
         background: {
             primary: '#ffffff',
             secondary: '#ffffff',
+            tertiary: '',
+            accent: '',
         },
     },
     dark: {
@@ -43,6 +47,7 @@ const themes = {
             primary: '#101518',
             secondary: '#1a2227',
             tertiary: '#33424b',
+            accent: '',
         },
     },
 };

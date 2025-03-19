@@ -4,21 +4,17 @@ import { Theme, useTheme } from '../../../Context';
 
 interface Props {
     key: string;
-    name: string | undefined;
-    sets: string | undefined;
-    reps: string | undefined;
-    info: string | undefined;
+    name: string;
+    sets: string;
+    reps: string;
+    info: string;
 }
 
 export const ExerciseCard = ({ name, sets, reps, info }: Props) => {
     const { theme } = useTheme();
     const styles = useMemo(() => createStyles(theme), [theme]);
 
-    const generateDisplay = (
-        sets: string | undefined,
-        reps: string | undefined,
-        info: string | undefined,
-    ) => {
+    const generateDisplay = (sets: string, reps: string, info: string) => {
         let x = sets || reps ? 'x' : '';
         let showInfo = info ? `•${info}` : '';
 
@@ -35,32 +31,6 @@ export const ExerciseCard = ({ name, sets, reps, info }: Props) => {
 
 const createStyles = (theme: Theme) =>
     StyleSheet.create({
-        scrollView: { padding: 10 },
-        container: {
-            flex: 1,
-            flexDirection: 'column',
-            alignItems: 'center',
-        },
-        calendarWrapper: {
-            width: '100%',
-            borderRadius: 15,
-            overflow: 'hidden',
-            boxShadow: '0px 0px 3px #a3a3a3',
-            paddingBottom: 10,
-            marginBottom: 10,
-            backgroundColor: theme.background.secondary,
-        },
-        notesWrapper: { width: '100%' },
-
-        exerciseWrapper: {
-            justifyContent: 'flex-start',
-            alignItems: 'baseline',
-        },
-        addBtn: {
-            paddingTop: 10,
-            opacity: 0.9,
-            zIndex: 1,
-        },
         note: {
             padding: 8,
             borderRadius: 10,

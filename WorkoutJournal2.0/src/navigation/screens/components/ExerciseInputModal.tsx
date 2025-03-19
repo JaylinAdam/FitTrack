@@ -6,6 +6,7 @@ import {
     TextInput,
     View,
     Text,
+    Pressable,
     TouchableWithoutFeedback,
 } from 'react-native';
 import { Portal, Dialog } from 'react-native-paper';

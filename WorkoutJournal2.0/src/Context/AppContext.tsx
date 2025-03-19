@@ -86,12 +86,13 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
                 ...sessionList[sessionIndex].exercises,
                 exercise,
             ];
+            console.log(sessionList);
             setSessions(sessionList);
         } else {
             const newSession = new Session('', TARGET_DATE, '', [exercise]);
             setSessions([...sessions, newSession]);
+            console.log(newSession);
         }
-
         setVisible(false);
     };
 
