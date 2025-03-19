@@ -4,24 +4,23 @@ import { Theme, useTheme } from '../../../Context';
 
 interface Props {
     key: string;
-    name: string | undefined;
-    sets: string | undefined;
-    reps: string | undefined;
-    info: string | undefined;
+    name: string;
+    sets: string;
+    reps: string;
+    info: string;
     onPress: () => void;
 }
 
 export const ExerciseCard = ({ name, sets, reps, info, onPress }: Props) => {
+    // CONTEXTS
     const { theme } = useTheme();
+    // STYLE
     const styles = useMemo(() => createStyles(theme), [theme]);
 
-    const generateDisplay = (
-        sets: string | undefined,
-        reps: string | undefined,
-        info: string | undefined,
-    ) => {
-        let x = sets || reps ? 'x' : '';
-        let showInfo = info ? `•${info}` : '';
+    // METHOD: generate display for exercise
+    const generateDisplay = (sets: string, reps: string, info: string) => {
+        const x = sets || reps ? 'x' : '';
+        const showInfo = info ? `•${info}` : '';
 
         return sets + x + reps + showInfo;
     };
@@ -41,6 +40,7 @@ const createStyles = (theme: Theme) =>
             borderRadius: 10,
             marginTop: 10,
             boxShadow: '0px 0px 3px #a3a3a3',
+            width: '100%',
         },
         title: {
             fontSize: 20,

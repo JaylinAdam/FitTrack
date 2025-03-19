@@ -1,21 +1,62 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { useTheme, Theme, useApp } from '../../../Context';
+import { useTheme, Theme, useApp, Tools } from '../../../Context';
+import { Exercise, KeyType } from '../../../../models';
 import { Icon, Input } from '.';
-import { Exercise } from '../../../../models';
 
-export const ExerciseForm = ({ index }: { index: number }) => {
+interface Props {
+    index: number;
+}
+
+export const ExerciseForm = ({ index }: Props) => {
+    // CONTEXTS
     const { theme } = useTheme();
-    const { setVisible, hasValue, handleExSubmit, TARGET_DATE, targetSession } =
-        useApp();
-
+    const { setVisible, handleExSubmit, TARGET_DATE, targetSession } = useApp();
+    // STYLE
     const styles = useMemo(() => createStyles(theme), [theme]);
-
+    // STATES
     const [name, setName] = useState('');
     const [info, setInfo] = useState('');
     const [sets, setSets] = useState('');
     const [reps, setReps] = useState('');
 
+    // METHOD: update states with valid inputs
+    const handleUpdateInput = (
+        value: string,
+        setMethod: React.Dispatch<React.SetStateAction<string>>,
+        type: KeyType = KeyType.default,
+    ) => {
+        switch (type) {
+            case KeyType.numeric:
+                if (Tools.isOnlyNumbers(value)) {
+                    setMethod(value);
+                }
+                break;
+            case KeyType.default:
+                setMethod(value);
+                break;
+        }
+    };
+
+    // METHOD: close modal (set visibility)
+    const handleClose = () => {
+        setVisible(false);
+    };
+
+    // METHOD: check if exercise submissions is valid
+    const validSubmission = ({ name, reps, sets, info }: Exercise) =>
+        Tools.hasValue(name) && [info, reps, sets].some(Tools.hasValue);
+
+    // METHOD: submit valid exercise and close modal
+    const handleSubmit = () => {
+        const exercise: Exercise = new Exercise(name, info, reps, sets);
+        if (validSubmission(exercise)) {
+            handleExSubmit(exercise, index);
+            handleClose();
+        }
+    };
+
+    // initialize states (if target session and target exercise set existing exercise values)
     useEffect(() => {
         if (targetSession && index >= 0) {
             var targetExercise = targetSession.exercises[index];
@@ -26,21 +67,6 @@ export const ExerciseForm = ({ index }: { index: number }) => {
         }
     }, [index]);
 
-    const validSubmission = ({ name, reps, sets, info }: Exercise) =>
-        hasValue(name) && (hasValue(info) || hasValue(reps) || hasValue(sets));
-
-    const handleClose = () => {
-        setVisible(false);
-    };
-
-    const handleSubmit = () => {
-        const exercise: Exercise = new Exercise(name, info, reps, sets);
-        if (validSubmission(exercise)) {
-            handleExSubmit(exercise, index);
-            handleClose();
-        }
-    };
-
     return (
         <View style={styles.container}>
             <Text style={styles.title}>{TARGET_DATE}</Text>
@@ -48,29 +74,33 @@ export const ExerciseForm = ({ index }: { index: number }) => {
                 <Input
                     title="Exercise"
                     value={name}
-                    onChange={setName}
-                    keyType="default"
+                    onChange={value => handleUpdateInput(value, setName)}
+                    keyType={KeyType.default}
                 />
 
                 <Input
                     title="Info"
                     value={info}
-                    onChange={setInfo}
-                    keyType="default"
+                    onChange={value => handleUpdateInput(value, setInfo)}
+                    keyType={KeyType.default}
                 />
             </View>
             <View style={styles.row}>
                 <Input
                     title="Sets"
                     value={sets}
-                    onChange={setSets}
-                    keyType="numeric"
+                    onChange={value =>
+                        handleUpdateInput(value, setSets, KeyType.numeric)
+                    }
+                    keyType={KeyType.numeric}
                 />
                 <Input
                     title="Reps"
                     value={reps}
-                    onChange={setReps}
-                    keyType="numeric"
+                    onChange={value =>
+                        handleUpdateInput(value, setReps, KeyType.numeric)
+                    }
+                    keyType={KeyType.numeric}
                 />
             </View>
             <View style={styles.btnContainer}>

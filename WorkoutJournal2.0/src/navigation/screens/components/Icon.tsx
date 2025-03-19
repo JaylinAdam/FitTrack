@@ -20,8 +20,9 @@ export const Icon = ({
     style,
     onPress,
 }: Props) => {
+    // CONTEXT
     const { theme } = useTheme();
-
+    // STYLE
     const styles = useMemo(
         () => createStyles(theme, bgColor),
         [bgColor, theme],
@@ -30,8 +31,8 @@ export const Icon = ({
     return (
         <AntDesign
             name={antIconName}
-            size={size ? size : 40}
-            color={color ? color : theme.text.quaternary}
+            size={size ?? 40}
+            color={color ?? theme.text.quaternary}
             style={[styles.icon, { ...style }]}
             onPress={onPress}
         />

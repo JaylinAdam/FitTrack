@@ -1,17 +1,19 @@
 import React, { useMemo } from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 import { useTheme, Theme } from '../../../Context';
+import { KeyType } from '../../../../models';
 
 interface Props {
     title: string;
     value: string;
     onChange: (text: string) => void;
-    keyType: 'default' | 'numeric';
+    keyType: KeyType;
 }
 
 export const Input = ({ title, value, onChange, keyType }: Props) => {
+    // CONTEXT
     const { theme } = useTheme();
-
+    // STYLE
     const styles = useMemo(() => createStyles(theme), [theme]);
 
     return (

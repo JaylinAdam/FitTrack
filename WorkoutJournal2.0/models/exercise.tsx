@@ -1,18 +1,17 @@
-export class Exercise {
-    name?: string;
-    info?: string;
-    reps?: string;
-    sets?: string;
+import { v4 as uuidv4 } from 'uuid';
 
-    constructor(
-        name?: string,
-        info?: string,
-        reps?: string,
-        sets?: string,
-    ) {
-        this.name = name || "";
-        this.info = info || "";
-        this.reps = reps || "";
-        this.sets = sets || "";
+export class Exercise {
+    id?: string;
+    name: string;
+    info: string;
+    reps: string;
+    sets: string;
+
+    constructor(name: string, info: string, reps: string, sets: string) {
+        this.id = uuidv4();
+        this.name = name || '';
+        this.info = info || '';
+        this.reps = reps || '';
+        this.sets = sets || '';
     }
 }

@@ -1,13 +1,8 @@
-// libraries
 import React, { useMemo } from 'react';
 import { Button, Text } from '@react-navigation/elements';
 import { useNavigation } from '@react-navigation/native';
 import { Dimensions, StyleSheet, View, ScrollView } from 'react-native';
-
-// context
 import { useApp, Theme, useTheme } from '../../Context';
-
-// assets
 import Right from '../../assets/right.svg';
 
 // page variables
@@ -16,10 +11,12 @@ const GAP = 8;
 const CARD_WIDTH = (width - GAP * 3) / 2; // Subtract gap and divide by 2
 
 export function Home() {
+    // NAVIGATION
     const navigation = useNavigation();
+    // CONTEXTS
     const { theme, toggleTheme } = useTheme();
     const { sessions, todaySession } = useApp();
-
+    // STYLE
     const styles = useMemo(() => createStyles(theme), [theme]);
 
     return (

@@ -1,18 +1,12 @@
-// libraries
 import React, { useMemo, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
-
 // import { useNavigation } from '@react-navigation/native';
 import { Calendar as CalComp } from 'react-native-calendars';
-
-// context
 import { useApp, Theme, useTheme } from '../../Context';
-
-// components
 import { ExerciseInputModal, Icon, ExerciseCard } from './components';
 
+// interface of data returned from calendar onPress
 interface Day {
-    // interface of data returned from calendar onPress
     dateString: string;
     day: number;
     month: number;
@@ -22,17 +16,7 @@ interface Day {
 
 export const Calendar = () => {
     // const navigation = useNavigation();
-    const { theme } = useTheme();
-
-    const styles = useMemo(() => createStyles(theme), [theme]);
-
-    const [exerciseIndex, setExerciseIndex] = useState(-1);
-
-    const handleInsertPress = (index: number) => {
-        setExerciseIndex(index);
-        setVisible(true);
-    };
-
+    // CONTEXT
     const {
         selected,
         setSelected,
@@ -41,7 +25,19 @@ export const Calendar = () => {
         CURRENT_DATE,
         setVisible,
     } = useApp();
+    const { theme } = useTheme();
+    // STYLE
+    const styles = useMemo(() => createStyles(theme), [theme]);
+    // STATES
+    const [exerciseIndex, setExerciseIndex] = useState(-1);
 
+    // METHOD: Insert Button and Update Press
+    const handleInsertPress = (index: number) => {
+        setExerciseIndex(index);
+        setVisible(true);
+    };
+
+    // METHOD: returns formatted list of sessions to display mark on calendar dates
     const formattedMarkedList = () => {
         const formatted: any = {
             [selected]: {
@@ -95,7 +91,7 @@ export const Calendar = () => {
             </View>
             <View style={styles.notesWrapper}>
                 {targetSession?.exercises.map((e, index) => {
-                    const key = `${e.name}1`;
+                    const key = e.name + index;
                     return (
                         <ExerciseCard
                             key={key}
