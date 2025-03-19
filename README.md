@@ -2,8 +2,10 @@
 
 React Native Mobile App for Workout Logging
 
-## Git Notes
+## React Notes
+-   [useState documentation](https://react.dev/reference/react/useState#setstate) 
 
+## Git Notes
 -   [Git Tips](https://stackoverflow.com/questions/315911/git-for-beginners-the-definitive-practical-guide)
 -   [Branching strategies](https://www.geeksforgeeks.org/branching-strategies-in-git/)
 

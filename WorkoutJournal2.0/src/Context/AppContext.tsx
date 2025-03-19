@@ -4,8 +4,10 @@ import React, {
     ReactNode,
     useMemo,
     useContext,
+    useEffect,
 } from 'react';
 import { Session, Exercise } from '../../models';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface AppState {
     sessions: Session[];
@@ -19,7 +21,7 @@ interface AppState {
     CURRENT_DATE: string;
     TARGET_DATE: string;
     hasValue: (value: string | undefined) => boolean;
-    handleExSubmit: (exercise: Exercise) => void;
+    handleExSubmit: (exercise: Exercise, exerciseIndex: number) => void;
 }
 
 const defaultState: AppState = {
@@ -58,6 +60,7 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
     const [sessions, setSessions] = useState<Session[]>([]);
     const [selected, setSelected] = useState('');
     const [visible, setVisible] = useState(false);
+    const [storageLoading, setStorageLoading] = useState(true);
 
     // global variable
     const currentDate = () => formatDate(new Date());
@@ -66,35 +69,73 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
     const targetDate = () => (hasValue(selected) ? selected : CURRENT_DATE);
     const TARGET_DATE = targetDate();
 
-    // methods
+    // MEMO: targeted session
     const targetSession = useMemo(() => {
         const focusIndex = sessions?.findIndex(s => s.date === TARGET_DATE);
         return focusIndex !== -1 ? sessions[focusIndex] : undefined;
     }, [sessions, selected]);
 
+    // MEMO: today's session
     const todaySession = useMemo(() => {
         const focusIndex = sessions?.findIndex(s => s.date === CURRENT_DATE);
         return focusIndex !== -1 ? sessions[focusIndex] : undefined;
     }, [sessions, selected]);
 
-    const handleExSubmit = (exercise: Exercise) => {
+    // METHOD: Handle submission of exercise to session state
+    const handleExSubmit = (exercise: Exercise, exerciseIndex: number) => {
         const sessionIndex = sessions?.findIndex(s => s.date === TARGET_DATE);
 
+        // if session exists
         if (sessionIndex >= 0) {
             const sessionList = [...sessions];
-            sessionList[sessionIndex].exercises = [
-                ...sessionList[sessionIndex].exercises,
-                exercise,
-            ];
-            console.log(sessionList);
+
+            if (exerciseIndex >= 0) {
+                sessionList[sessionIndex].exercises[exerciseIndex] = exercise;
+            } else {
+                sessionList[sessionIndex].exercises = [
+                    ...sessionList[sessionIndex].exercises,
+                    exercise,
+                ];
+            }
             setSessions(sessionList);
+            saveData(sessionList);
         } else {
             const newSession = new Session('', TARGET_DATE, '', [exercise]);
-            setSessions([...sessions, newSession]);
-            console.log(newSession);
+            const sessionList = [...sessions, newSession];
+            setSessions(sessionList);
+            saveData(sessionList);
         }
         setVisible(false);
     };
+
+    // METHOD: Save data to local storage as "SessionData" (can be viewed in Application > Local Storage > localhost)
+    const saveData = async (newData: Session[]) => {
+        try {
+            await AsyncStorage.setItem('SessionData', JSON.stringify(newData));
+        } catch (error) {
+            console.error('Error saving data:', error);
+        }
+    };
+
+    // ONLOAD: check for and load session data (if existing)
+    useEffect(() => {
+        // METHOD: Load data from local storage under "SessionData" and set it to session state
+        const loadData = async () => {
+            try {
+                const storedData = await AsyncStorage.getItem('SessionData');
+                if (storedData) {
+                    const parseData = JSON.parse(storedData);
+                    setSessions(parseData);
+                    console.log('Stored Session Data', parseData);
+                }
+            } catch (error) {
+                console.error('Error loading data:', error);
+            } finally {
+                setStorageLoading(false);
+            }
+        };
+        loadData();
+    }, []);
 
     return (
         <AppContext.Provider

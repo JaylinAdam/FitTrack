@@ -1,5 +1,5 @@
 // libraries
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 
 // import { useNavigation } from '@react-navigation/native';
@@ -25,6 +25,13 @@ export const Calendar = () => {
     const { theme } = useTheme();
 
     const styles = useMemo(() => createStyles(theme), [theme]);
+
+    const [exerciseIndex, setExerciseIndex] = useState(-1);
+
+    const handleInsertPress = (index: number) => {
+        setExerciseIndex(index);
+        setVisible(true);
+    };
 
     const {
         selected,
@@ -57,63 +64,58 @@ export const Calendar = () => {
     };
 
     return (
-        <>
-            <ScrollView
-                showsVerticalScrollIndicator={false}
-                style={styles.scrollView}
-            >
-                <View style={styles.container}>
-                    <View style={styles.calendarWrapper}>
-                        <CalComp
-                            theme={{
-                                backgroundColor: theme.background.secondary,
-                                calendarBackground: theme.background.secondary,
-                                textSectionTitleColor: theme.text.accent,
-                                monthTextColor: theme.text.accent,
-                                textMonthFontWeight: 500,
-                                textMonthFontSize: 18,
-                                selectedDayBackgroundColor: theme.text.accent,
-                                selectedDayTextColor: theme.text.primary,
-                                todayTextColor: theme.text.accent,
-                                dayTextColor: theme.text.primary,
-                                textDisabledColor: theme.text.tertiary,
-                                textInactiveColor: theme.text.tertiary,
-                            }}
-                            current={CURRENT_DATE}
-                            onDayPress={(day: Day) => {
-                                setSelected(day.dateString);
-                            }}
-                            markedDates={{ ...formattedMarkedList() }}
-                        />
-                    </View>
-                </View>
-                <View style={styles.notesWrapper}>
-                    {targetSession?.exercises.map((e, index) => {
-                        const key = `${e.name}${index}`;
-                        return (
-                            <ExerciseCard
-                                key={key}
-                                name={e.name}
-                                info={e.info}
-                                sets={e.sets}
-                                reps={e.reps}
-                            />
-                        );
-                    })}
-                    <Icon
-                        antIconName="plus"
-                        bgColor={theme.button.add}
-                        style={styles.addIcon}
-                        onPress={() => setVisible(true)}
+        <ScrollView
+            showsVerticalScrollIndicator={false}
+            style={styles.scrollView}
+        >
+            <View style={styles.container}>
+                <View style={styles.calendarWrapper}>
+                    <CalComp
+                        theme={{
+                            backgroundColor: theme.background.secondary,
+                            calendarBackground: theme.background.secondary,
+                            textSectionTitleColor: theme.text.accent,
+                            monthTextColor: theme.text.accent,
+                            textMonthFontWeight: 500,
+                            textMonthFontSize: 18,
+                            selectedDayBackgroundColor: theme.text.accent,
+                            selectedDayTextColor: theme.text.primary,
+                            todayTextColor: theme.text.accent,
+                            dayTextColor: theme.text.primary,
+                            textDisabledColor: theme.text.tertiary,
+                            textInactiveColor: theme.text.tertiary,
+                        }}
+                        current={CURRENT_DATE}
+                        onDayPress={(day: Day) => {
+                            setSelected(day.dateString);
+                        }}
+                        markedDates={{ ...formattedMarkedList() }}
                     />
                 </View>
-                <View>
-                    <View style={[StyleSheet.absoluteFillObject]}>
-                        <ExerciseInputModal />
-                    </View>
-                </View>
-            </ScrollView>
-        </>
+            </View>
+            <View style={styles.notesWrapper}>
+                {targetSession?.exercises.map((e, index) => {
+                    const key = `${e.name}1`;
+                    return (
+                        <ExerciseCard
+                            key={key}
+                            name={e.name}
+                            info={e.info}
+                            sets={e.sets}
+                            reps={e.reps}
+                            onPress={() => handleInsertPress(index)}
+                        />
+                    );
+                })}
+                <Icon
+                    antIconName="plus"
+                    bgColor={theme.button.add}
+                    style={styles.addIcon}
+                    onPress={() => handleInsertPress(-1)}
+                />
+            </View>
+            <ExerciseInputModal index={exerciseIndex} />
+        </ScrollView>
     );
 };
 
