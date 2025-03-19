@@ -21,7 +21,7 @@ interface AppState {
     CURRENT_DATE: string;
     TARGET_DATE: string;
     hasValue: (value: string | undefined) => boolean;
-    handleExSubmit: (exercise: Exercise) => void;
+    handleExSubmit: (exercise: Exercise, exerciseIndex: number) => void;
 }
 
 const defaultState: AppState = {
@@ -81,17 +81,22 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
         return focusIndex !== -1 ? sessions[focusIndex] : undefined;
     }, [sessions, selected]);
 
-    // METHOD: Handle submission of exercise to session state
-    const handleExSubmit = (exercise: Exercise) => {
+// METHOD: Handle submission of exercise to session state
+    const handleExSubmit = (exercise: Exercise, exerciseIndex: number) => {
         const sessionIndex = sessions?.findIndex(s => s.date === TARGET_DATE);
 
         // if session exists
         if (sessionIndex >= 0) {
             const sessionList = [...sessions];
-            sessionList[sessionIndex].exercises = [
-                ...sessionList[sessionIndex].exercises,
-                exercise,
-            ];
+
+            if (exerciseIndex >= 0) {
+                sessionList[sessionIndex].exercises[exerciseIndex] = exercise;
+            } else {
+                sessionList[sessionIndex].exercises = [
+                    ...sessionList[sessionIndex].exercises,
+                    exercise,
+                ];
+            }
             setSessions(sessionList);
             saveData(sessionList);
         } else {

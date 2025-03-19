@@ -1,12 +1,13 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useTheme, Theme, useApp } from '../../../Context';
 import { Icon, Input } from '.';
 import { Exercise } from '../../../../models';
 
-export const ExerciseForm = () => {
+export const ExerciseForm = ({ index }: { index: number }) => {
     const { theme } = useTheme();
-    const { setVisible, hasValue, handleExSubmit, TARGET_DATE } = useApp();
+    const { setVisible, hasValue, handleExSubmit, TARGET_DATE, targetSession } =
+        useApp();
 
     const styles = useMemo(() => createStyles(theme), [theme]);
 
@@ -14,6 +15,16 @@ export const ExerciseForm = () => {
     const [info, setInfo] = useState('');
     const [sets, setSets] = useState('');
     const [reps, setReps] = useState('');
+
+    useEffect(() => {
+        if (targetSession && index >= 0) {
+            var targetExercise = targetSession.exercises[index];
+            setName(targetExercise.name ?? '');
+            setInfo(targetExercise.info ?? '');
+            setSets(targetExercise.sets ?? '');
+            setReps(targetExercise.reps ?? '');
+        }
+    }, [index]);
 
     const validSubmission = ({ name, reps, sets, info }: Exercise) =>
         hasValue(name) && (hasValue(info) || hasValue(reps) || hasValue(sets));
@@ -25,7 +36,7 @@ export const ExerciseForm = () => {
     const handleSubmit = () => {
         const exercise: Exercise = new Exercise(name, info, reps, sets);
         if (validSubmission(exercise)) {
-            handleExSubmit(exercise);
+            handleExSubmit(exercise, index);
             handleClose();
         }
     };

@@ -8,7 +8,7 @@ import { useApp, Theme, useTheme } from '../../../Context/';
 // components
 import { ExerciseForm } from './ExerciseForm';
 
-export const ExerciseInputModal = () => {
+export const ExerciseInputModal = ({ index }: { index: number }) => {
     const { theme } = useTheme();
     const styles = useMemo(() => createStyles(theme), [theme]);
 
@@ -31,7 +31,7 @@ export const ExerciseInputModal = () => {
                 {/* Prevent dismissing when clicking inside the modal */}
                 <Pressable onPress={() => {}} style={styles.dialogWrapper}>
                     <View style={styles.dialog}>
-                        <ExerciseForm />
+                        <ExerciseForm index={index} />
                     </View>
                 </Pressable>
             </Pressable>
