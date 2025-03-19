@@ -1,5 +1,5 @@
 // libraries
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 
 // import { useNavigation } from '@react-navigation/native';
@@ -25,6 +25,13 @@ export const Calendar = () => {
     const { theme } = useTheme();
 
     const styles = useMemo(() => createStyles(theme), [theme]);
+
+    const [exerciseIndex, setExerciseIndex] = useState(-1);
+
+    const handleInsertPress = (index: number) => {
+        setExerciseIndex(index);
+        setVisible(true);
+    }
 
     const {
         selected,
@@ -93,10 +100,12 @@ export const Calendar = () => {
                         return (
                             <ExerciseCard
                                 key={key}
+                                index={index}
                                 name={e.name}
                                 info={e.info}
                                 sets={e.sets}
                                 reps={e.reps}
+                                onPress={() => handleInsertPress(index)}
                             />
                         );
                     })}
@@ -104,12 +113,12 @@ export const Calendar = () => {
                         antIconName="plus"
                         bgColor={theme.button.add}
                         style={styles.addIcon}
-                        onPress={() => setVisible(true)}
+                        onPress={() => handleInsertPress(-1)}
                     />
                 </View>
                 <View>
                     <View style={[StyleSheet.absoluteFillObject]}>
-                        <ExerciseInputModal />
+                        <ExerciseInputModal index={exerciseIndex} />
                     </View>
                 </View>
             </ScrollView>

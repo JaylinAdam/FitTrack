@@ -1,10 +1,6 @@
 // libraries
 import React, { useMemo } from 'react';
-import {
-    Keyboard,
-    StyleSheet,
-    TouchableWithoutFeedback,
-} from 'react-native';
+import { Keyboard, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import { Portal, Dialog } from 'react-native-paper';
 
 //context
@@ -13,7 +9,7 @@ import { useApp, Theme, useTheme } from '../../../Context/';
 // components
 import { ExerciseForm } from './ExerciseForm';
 
-export const ExerciseInputModal = () => {
+export const ExerciseInputModal = ({ index }: { index: number }) => {
     const { theme } = useTheme();
     const styles = useMemo(() => createStyles(theme), [theme]);
 
@@ -28,7 +24,7 @@ export const ExerciseInputModal = () => {
                     onDismiss={() => setVisible(false)}
                 >
                     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                        <ExerciseForm />
+                        <ExerciseForm index={index} />
                     </TouchableWithoutFeedback>
                 </Dialog>
             </Portal>
