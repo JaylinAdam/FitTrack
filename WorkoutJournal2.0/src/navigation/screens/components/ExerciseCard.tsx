@@ -4,7 +4,6 @@ import { Theme, useTheme } from '../../../Context';
 
 interface Props {
     key: string;
-    index: number;
     name: string | undefined;
     sets: string | undefined;
     reps: string | undefined;

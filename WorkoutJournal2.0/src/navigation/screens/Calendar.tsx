@@ -99,7 +99,6 @@ export const Calendar = () => {
                     return (
                         <ExerciseCard
                             key={key}
-                            index={index}
                             name={e.name}
                             info={e.info}
                             sets={e.sets}
