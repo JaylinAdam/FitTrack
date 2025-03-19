@@ -12,12 +12,18 @@ type Theme = {
         primary?: string;
         secondary?: string;
         tertiary?: string;
+        quaternary?: string;
         accent?: string;
     };
     background: {
         primary?: string;
         secondary?: string;
         tertiary?: string;
+    };
+    button: {
+        add?: string;
+        submit?: string;
+        close?: string;
     };
 };
 
@@ -28,6 +34,7 @@ const themes = {
             secondary: '#000000',
             tertiary: '',
             accent: '',
+            quaternary: '#ffffff', // flip of theme
         },
         background: {
             primary: '#ffffff',
@@ -35,12 +42,18 @@ const themes = {
             tertiary: '',
             accent: '',
         },
+        button: {
+            add: '#f4511e',
+            submit: '#34B223',
+            close: '#E3252B',
+        },
     },
     dark: {
         text: {
             primary: '#ffffff',
             secondary: '#ffffff',
             tertiary: '#92a6b9',
+            quaternary: '#000000',
             accent: '#64bdff',
         },
         background: {
@@ -48,6 +61,11 @@ const themes = {
             secondary: '#1a2227',
             tertiary: '#33424b',
             accent: '',
+        },
+        button: {
+            add: '#f4511e',
+            submit: '#34B223',
+            close: '#E3252B',
         },
     },
 };
