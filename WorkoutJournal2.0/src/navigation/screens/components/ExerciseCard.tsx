@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
-import { Theme, useApp, useTheme } from '../../../Context';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { Text, StyleSheet, Pressable } from 'react-native';
+import { Theme, useTheme } from '../../../Context';
 
 interface Props {
     key: string;
@@ -29,12 +28,10 @@ export const ExerciseCard = ({ name, sets, reps, info, onPress }: Props) => {
     };
 
     return (
-        <TouchableWithoutFeedback onPress={onPress}>
-            <View style={styles.note}>
-                <Text style={styles.title}>{name}</Text>
-                <Text style={styles.desc}>{generateDisplay(sets, reps, info)}</Text>
-            </View>
-        </TouchableWithoutFeedback>
+        <Pressable style={styles.note} onPress={onPress}>
+            <Text style={styles.title}>{name}</Text>
+            <Text style={styles.desc}>{generateDisplay(sets, reps, info)}</Text>
+        </Pressable>
     );
 };
 

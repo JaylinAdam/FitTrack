@@ -1,6 +1,5 @@
 import React, { useState, useMemo } from 'react';
 import { View, Switch } from 'react-native';
-import { PaperProvider } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -67,13 +66,11 @@ export default function App() {
     return (
         <ThemeProvider>
             <AppProvider>
-                <PaperProvider>
-                    <GestureHandlerRootView>
-                        <NavigationContainer>
-                            <RootStack />
-                        </NavigationContainer>
-                    </GestureHandlerRootView>
-                </PaperProvider>
+                <GestureHandlerRootView>
+                    <NavigationContainer>
+                        <RootStack />
+                    </NavigationContainer>
+                </GestureHandlerRootView>
             </AppProvider>
         </ThemeProvider>
     );
