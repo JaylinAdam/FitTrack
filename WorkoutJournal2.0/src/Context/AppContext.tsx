@@ -6,8 +6,9 @@ import React, {
     useContext,
     useEffect,
 } from 'react';
-import { Session, Exercise } from '../../models';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Session, Exercise } from '../../models';
+import { Tools } from '.';
 
 interface AppState {
     sessions: Session[];
@@ -20,7 +21,6 @@ interface AppState {
     todaySession: Session | undefined;
     CURRENT_DATE: string;
     TARGET_DATE: string;
-    hasValue: (value: string | undefined) => boolean;
     handleExSubmit: (exercise: Exercise, exerciseIndex: number) => void;
 }
 
@@ -35,23 +35,8 @@ const defaultState: AppState = {
     todaySession: undefined,
     CURRENT_DATE: '',
     TARGET_DATE: '',
-    hasValue: () => true,
     handleExSubmit: () => {},
 };
-
-// !! Tools (separate out later)
-//#region Tools to be moved
-const formatDate = (date: Date) => {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
-};
-
-const hasValue = (value: string | undefined): boolean => {
-    return !!value?.trim();
-};
-// #endregion
 
 const AppContext = createContext<AppState>(defaultState);
 
@@ -63,48 +48,50 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
     const [storageLoading, setStorageLoading] = useState(true);
 
     // global variable
-    const currentDate = () => formatDate(new Date());
-    const CURRENT_DATE = currentDate();
+    const CURRENT_DATE = Tools.formatDate(new Date());
+    const TARGET_DATE = Tools.hasValue(selected) ? selected : CURRENT_DATE;
 
-    const targetDate = () => (hasValue(selected) ? selected : CURRENT_DATE);
-    const TARGET_DATE = targetDate();
+    // METHOD: Get Session from date supplied
+    const focusSession = (date: string) => {
+        const focusIndex = sessions?.findIndex(s => s.date === date);
+        return focusIndex !== -1 ? sessions[focusIndex] : undefined;
+    };
 
     // MEMO: targeted session
     const targetSession = useMemo(() => {
-        const focusIndex = sessions?.findIndex(s => s.date === TARGET_DATE);
-        return focusIndex !== -1 ? sessions[focusIndex] : undefined;
+        return focusSession(TARGET_DATE);
     }, [sessions, selected]);
 
     // MEMO: today's session
     const todaySession = useMemo(() => {
-        const focusIndex = sessions?.findIndex(s => s.date === CURRENT_DATE);
-        return focusIndex !== -1 ? sessions[focusIndex] : undefined;
+        return focusSession(CURRENT_DATE);
     }, [sessions, selected]);
 
     // METHOD: Handle submission of exercise to session state
     const handleExSubmit = (exercise: Exercise, exerciseIndex: number) => {
         const sessionIndex = sessions?.findIndex(s => s.date === TARGET_DATE);
 
-        // if session exists
+        var sessionList = [];
+        // if session targeted
         if (sessionIndex >= 0) {
-            const sessionList = [...sessions];
-
+            sessionList = [...sessions];
+            // if exercise targeted
             if (exerciseIndex >= 0) {
+                // update existing exercise
                 sessionList[sessionIndex].exercises[exerciseIndex] = exercise;
             } else {
+                // append exercise to list
                 sessionList[sessionIndex].exercises = [
                     ...sessionList[sessionIndex].exercises,
                     exercise,
                 ];
             }
-            setSessions(sessionList);
-            saveData(sessionList);
         } else {
             const newSession = new Session('', TARGET_DATE, '', [exercise]);
-            const sessionList = [...sessions, newSession];
-            setSessions(sessionList);
-            saveData(sessionList);
+            sessionList = [...sessions, newSession];
         }
+        setSessions(sessionList);
+        saveData(sessionList);
         setVisible(false);
     };
 
@@ -148,7 +135,6 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
                 setVisible,
 
                 CURRENT_DATE,
-                hasValue,
                 TARGET_DATE,
 
                 targetSession,

@@ -1,19 +1,16 @@
-// libraries
 import React, { useMemo } from 'react';
 import { Keyboard, StyleSheet, View, Modal, Pressable } from 'react-native';
-
-//context
 import { useApp, Theme, useTheme } from '../../../Context/';
-
-// components
 import { ExerciseForm } from './ExerciseForm';
 
 export const ExerciseInputModal = ({ index }: { index: number }) => {
+    // CONTEXT
     const { theme } = useTheme();
+    const { visible, setVisible } = useApp();
+    // STYLE
     const styles = useMemo(() => createStyles(theme), [theme]);
 
-    const { visible, setVisible } = useApp();
-
+    // METHOD: close/dismiss modal
     const handleDismiss = () => {
         setVisible(false); // Close modal on background click
         Keyboard.dismiss(); // Optionally dismiss keyboard when modal closes
@@ -24,7 +21,7 @@ export const ExerciseInputModal = ({ index }: { index: number }) => {
             visible={visible}
             transparent
             animationType="fade"
-            onRequestClose={() => setVisible(false)}
+            onRequestClose={handleDismiss}
         >
             {/* Dismiss modal if clicking on overlay space */}
             <Pressable onPress={handleDismiss} style={styles.overlay}>

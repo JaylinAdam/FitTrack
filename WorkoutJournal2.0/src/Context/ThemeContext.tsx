@@ -6,8 +6,9 @@ import React, {
     useEffect,
 } from 'react';
 import { Appearance } from 'react-native';
+import { ColorScheme as Color } from '../../models';
 
-type Theme = {
+interface Theme {
     text: {
         primary?: string;
         secondary?: string;
@@ -19,13 +20,19 @@ type Theme = {
         primary?: string;
         secondary?: string;
         tertiary?: string;
+        quaternary?: string;
+        accent?: string;
+    };
+    opacity: {
+        light?: string;
+        heavy?: string;
     };
     button: {
         add?: string;
         submit?: string;
         close?: string;
     };
-};
+}
 
 const themes = {
     light: {
@@ -41,6 +48,11 @@ const themes = {
             secondary: '#ffffff',
             tertiary: '',
             accent: '',
+            quaternary: '',
+        },
+        opacity: {
+            light: '',
+            dark: '',
         },
         button: {
             add: '#f4511e',
@@ -60,7 +72,12 @@ const themes = {
             primary: '#101518',
             secondary: '#1a2227',
             tertiary: '#33424b',
+            quaternary: '',
             accent: '',
+        },
+        opacity: {
+            light: '',
+            dark: '',
         },
         button: {
             add: '#f4511e',
@@ -86,13 +103,13 @@ const ThemeProvider = ({ children }: { children: ReactNode }) => {
     const colorScheme = Appearance.getColorScheme();
 
     const [theme, setTheme] = useState<Theme>(
-        colorScheme === 'dark' ? themes.dark : themes.light,
+        colorScheme === Color.dark ? themes.dark : themes.light,
     );
 
     // Listen for system theme changes
     useEffect(() => {
         const subscription = Appearance.addChangeListener(({ colorScheme }) => {
-            setTheme(colorScheme === 'dark' ? themes.dark : themes.light);
+            setTheme(colorScheme === Color.dark ? themes.dark : themes.light);
         });
 
         return () => subscription.remove();
