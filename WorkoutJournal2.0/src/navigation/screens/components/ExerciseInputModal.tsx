@@ -41,12 +41,12 @@ const createStyles = (theme: Theme) =>
         overlay: {
             flex: 1,
             backgroundColor: 'rgba(0, 0, 0, 0.5)', // Dim background
-            paddingTop: 75,
+            paddingTop: 60,
             alignItems: 'center',
         },
         dialogWrapper: {
             width: '100%',
-            padding: 10,
+            padding: 8,
         },
         dialog: {
             width: '100%',

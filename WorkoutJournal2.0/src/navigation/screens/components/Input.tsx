@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 import { useTheme, Theme } from '../../../Context';
 import { KeyType } from '../../../../models';
@@ -13,8 +13,13 @@ interface Props {
 export const Input = ({ title, value, onChange, keyType }: Props) => {
     // CONTEXT
     const { theme } = useTheme();
+    // STATES
+    const [isFocused, setIsFocused] = useState<boolean>(false);
     // STYLE
-    const styles = useMemo(() => createStyles(theme), [theme]);
+    const styles = useMemo(
+        () => createStyles(theme, isFocused),
+        [theme, isFocused],
+    );
 
     return (
         <View style={styles.column}>
@@ -24,30 +29,41 @@ export const Input = ({ title, value, onChange, keyType }: Props) => {
                 keyboardType={keyType}
                 onChangeText={onChange}
                 value={value}
+                selectionColor={theme.text.accent}
+                onFocus={() => setIsFocused(true)}
+                onBlur={() => setIsFocused(false)}
             />
         </View>
     );
 };
 
-const createStyles = (theme: Theme) =>
+const createStyles = (theme: Theme, isFocused: boolean) =>
     StyleSheet.create({
         column: {
-            flex: 1,
-            padding: 10,
+            width: '100%',
+            padding: 5,
+            marginTop: 10,
+            borderWidth: 1,
+            borderRadius: 5,
+            borderColor: isFocused
+                ? theme.background.accent
+                : theme.background.tertiary,
         },
 
         title: {
-            fontSize: 20,
-            fontWeight: 'bold',
-            marginBottom: 5,
-            color: theme.text.primary,
+            fontSize: 14,
+            fontWeight: 'semibold',
+            color: theme.text.tertiary,
+            marginLeft: 5,
+            marginBottom: -20,
         },
         input: {
-            fontSize: 15,
-            borderWidth: 1,
-            borderRadius: 10,
-            padding: 10,
+            fontSize: 18,
+            borderWidth: 0,
+            paddingLeft: 5,
+            paddingTop: 25,
             borderColor: theme.text.tertiary,
             color: theme.text.secondary,
+            zIndex: 10,
         },
     });

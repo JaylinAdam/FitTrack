@@ -31,6 +31,7 @@ interface Theme {
         add?: string;
         submit?: string;
         close?: string;
+        disabled?: string;
     };
 }
 
@@ -55,9 +56,10 @@ const themes = {
             dark: '',
         },
         button: {
-            add: '#f4511e',
-            submit: '#34B223',
+            add: '#ff6d5d',
+            submit: '#83ff73',
             close: '#E3252B',
+            disabled: '#a5a5a5',
         },
     },
     dark: {
@@ -73,23 +75,24 @@ const themes = {
             secondary: '#1a2227',
             tertiary: '#33424b',
             quaternary: '',
-            accent: '',
+            accent: '#64bdff',
         },
         opacity: {
             light: '',
             dark: '',
         },
         button: {
-            add: '#f4511e',
-            submit: '#34B223',
+            add: '#ff6d5d',
+            submit: '#83ff73',
             close: '#E3252B',
+            disabled: '#a5a5a5',
         },
     },
 };
 
 interface ThemeState {
     theme: Theme;
-    toggleTheme: React.Dispatch<React.SetStateAction<Theme>>;
+    toggleTheme: () => void;
 }
 
 const defaultState: ThemeState = {

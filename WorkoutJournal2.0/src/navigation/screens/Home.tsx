@@ -12,9 +12,9 @@ const CARD_WIDTH = (width - GAP * 3) / 2; // Subtract gap and divide by 2
 
 export function Home() {
     // NAVIGATION
-    const navigation = useNavigation();
+    const { navigate } = useNavigation();
     // CONTEXTS
-    const { theme, toggleTheme } = useTheme();
+    const { theme } = useTheme();
     const { sessions, todaySession } = useApp();
     // STYLE
     const styles = useMemo(() => createStyles(theme), [theme]);
@@ -23,7 +23,10 @@ export function Home() {
         <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.container}>
                 <View style={styles.cardContainer}>
-                    <View style={styles.headerSpace}>
+                    <View
+                        style={styles.headerSpace}
+                        onTouchEnd={() => navigate('Calendar')}
+                    >
                         <Text style={styles.mainHead}>
                             Sessions
                             <Right height={20} width={20} />
@@ -35,7 +38,10 @@ export function Home() {
                     </View>
                 </View>
                 <View style={styles.cardContainer}>
-                    <View style={styles.headerSpace}>
+                    <View
+                        style={styles.headerSpace}
+                        onTouchEnd={() => navigate('Calendar')}
+                    >
                         <Text style={styles.mainHead}>
                             Exercises
                             <Right height={20} width={20} />
@@ -49,10 +55,10 @@ export function Home() {
                     </View>
                 </View>
 
-                <Button onPress={() => navigation.navigate('Settings')}>
+                <Button onPress={() => navigate('Settings')}>
                     Go to Settings
                 </Button>
-                <Button onPress={() => navigation.navigate('Calendar')}>
+                <Button onPress={() => navigate('Calendar')}>
                     Go to Calendar
                 </Button>
             </View>
@@ -65,7 +71,6 @@ const createStyles = (theme: Theme) =>
         container: {
             flex: 1,
             flexDirection: 'row',
-            // justifyContent: "center",
             alignItems: 'center',
             justifyContent: 'space-between',
             flexWrap: 'wrap',
