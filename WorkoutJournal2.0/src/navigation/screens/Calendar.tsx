@@ -138,7 +138,6 @@ const createStyles = (theme: Theme) =>
             backgroundColor: theme.background.secondary,
         },
         notesWrapper: {
-            marginLeft: 58,
             alignItems: 'baseline',
         },
         IconWrapper: { position: 'absolute', bottom: 10, right: 10 },
