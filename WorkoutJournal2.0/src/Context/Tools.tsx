@@ -8,7 +8,7 @@ const Tools = {
 
     hasValue: (value: string | undefined): boolean => !!value?.trim(),
 
-    isOnlyNumbers: (str: string): boolean => /^\d+$/.test(str),
+    isOnlyNumbers: (str: string): boolean => str === "" || /^\d+$/.test(str),
 
     isOnlyLettersWithSpaces: (str: string): boolean =>
         /^[a-zA-Z\s]+$/.test(str),

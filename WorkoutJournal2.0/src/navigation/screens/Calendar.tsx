@@ -30,7 +30,7 @@ export const Calendar = () => {
     const styles = useMemo(() => createStyles(theme), [theme]);
     // STATES
     const [exerciseIndex, setExerciseIndex] = useState(-1);
-
+    
     // METHOD: Insert Button and Update Press
     const handleInsertPress = (index: number) => {
         setExerciseIndex(index);
