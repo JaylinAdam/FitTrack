@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { Button, ScrollView, StyleSheet, View } from 'react-native';
 // import { useNavigation } from '@react-navigation/native';
 import { Calendar as CalComp } from 'react-native-calendars';
 import { useApp, Theme, useTheme } from '../../Context';
@@ -24,6 +24,7 @@ export const Calendar = () => {
         targetSession,
         CURRENT_DATE,
         setVisible,
+        handleExDelete,
     } = useApp();
     const { theme } = useTheme();
     // STYLE
@@ -36,6 +37,10 @@ export const Calendar = () => {
         setExerciseIndex(index);
         setVisible(true);
     };
+
+    const handleDeletePress = (index: number) => {
+        handleExDelete(index);
+    }
 
     // METHOD: returns formatted list of sessions to display mark on calendar dates
     const formattedMarkedList = () => {
@@ -99,7 +104,8 @@ export const Calendar = () => {
                             info={e.info}
                             sets={e.sets}
                             reps={e.reps}
-                            onPress={() => handleInsertPress(index)}
+                            onInsertPress={() => handleInsertPress(index)}
+                            onDeletePress={() => handleDeletePress(index)}
                         />
                     );
                 })}
