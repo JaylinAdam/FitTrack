@@ -6,12 +6,25 @@ const Tools = {
         return `${year}-${month}-${day}`;
     },
 
-    hasValue: (value: string | undefined): boolean => !!value?.trim(),
+    hasValue: (value: string | undefined): boolean => {
+        return !!value?.trim();
+    },
 
-    isOnlyNumbers: (str: string): boolean => /^\d+$/.test(str),
+    isOnlyNumbers: (str: string): boolean => {
+        return /^\d+$/.test(str);
+    },
 
-    isOnlyLettersWithSpaces: (str: string): boolean =>
-        /^[a-zA-Z\s]+$/.test(str),
+    isOnlyLettersWithSpaces: (str: string): boolean => {
+        return /^[a-zA-Z\s]+$/.test(str);
+    },
+
+    // METHOD: generate display for exercise
+    generateWorkoutDisplay: (sets: string, reps: string, info: string) => {
+        const x = sets || reps ? 'x' : '';
+        const showInfo = info ? `•${info}` : '';
+
+        return sets + x + reps + showInfo;
+    },
 };
 
 export { Tools };

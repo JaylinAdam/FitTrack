@@ -14,6 +14,7 @@ import { Settings } from './screens/Settings';
 import { Updates } from './screens/Updates';
 import { NotFound } from './screens/NotFound';
 import React from 'react';
+import { Calendar } from './screens/Calendar';
 
 const HomeTabs = createBottomTabNavigator({
     screens: {
@@ -33,8 +34,8 @@ const HomeTabs = createBottomTabNavigator({
                 ),
             },
         },
-        Updates: {
-            screen: Updates,
+        Calendar: {
+            screen: Calendar,
             options: {
                 tabBarIcon: ({ color, size }) => (
                     <Image
@@ -60,8 +61,8 @@ const RootStack = createNativeStackNavigator({
                 headerShown: false,
             },
         },
-        Profile: {
-            screen: Profile,
+        Calendar: {
+            screen: Calendar,
             linking: {
                 path: ':user(@[a-zA-Z0-9-_]+)',
                 parse: {

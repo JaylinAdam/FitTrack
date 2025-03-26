@@ -26,9 +26,7 @@ function RootStack() {
             },
             headerShadowVisible: false,
             headerTintColor: theme.text.primary,
-            headerTitleStyle: {
-                fontWeight: 'bold',
-            },
+            headerTitleStyle: { fontWeight: 'bold' },
             contentStyle: {
                 backgroundColor: theme.background.primary,
             },

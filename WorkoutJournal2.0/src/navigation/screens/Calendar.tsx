@@ -60,58 +60,63 @@ export const Calendar = () => {
     };
 
     return (
-        <ScrollView
-            showsVerticalScrollIndicator={false}
-            style={styles.scrollView}
-        >
-            <View style={styles.container}>
-                <View style={styles.calendarWrapper}>
-                    <CalComp
-                        theme={{
-                            backgroundColor: theme.background.secondary,
-                            calendarBackground: theme.background.secondary,
-                            textSectionTitleColor: theme.text.accent,
-                            monthTextColor: theme.text.accent,
-                            textMonthFontWeight: 500,
-                            textMonthFontSize: 18,
-                            selectedDayBackgroundColor: theme.text.accent,
-                            selectedDayTextColor: theme.text.primary,
-                            todayTextColor: theme.text.accent,
-                            dayTextColor: theme.text.primary,
-                            textDisabledColor: theme.text.tertiary,
-                            textInactiveColor: theme.text.tertiary,
-                        }}
-                        current={CURRENT_DATE}
-                        onDayPress={(day: Day) => {
-                            setSelected(day.dateString);
-                        }}
-                        markedDates={{ ...formattedMarkedList() }}
-                    />
-                </View>
-            </View>
-            <View style={styles.notesWrapper}>
-                {targetSession?.exercises.map((e, index) => {
-                    const key = e.name + index;
-                    return (
-                        <ExerciseCard
-                            key={key}
-                            name={e.name}
-                            info={e.info}
-                            sets={e.sets}
-                            reps={e.reps}
-                            onPress={() => handleInsertPress(index)}
+        <>
+            <ScrollView
+                showsVerticalScrollIndicator={false}
+                style={styles.scrollView}
+            >
+                <View style={styles.container}>
+                    <View style={styles.calendarWrapper}>
+                        <CalComp
+                            theme={{
+                                backgroundColor: theme.background.secondary,
+                                calendarBackground: theme.background.secondary,
+                                textSectionTitleColor: theme.text.accent,
+                                monthTextColor: theme.text.accent,
+                                textMonthFontWeight: 500,
+                                textMonthFontSize: 18,
+                                selectedDayBackgroundColor: theme.text.accent,
+                                selectedDayTextColor: theme.text.primary,
+                                todayTextColor: theme.text.accent,
+                                dayTextColor: theme.text.primary,
+                                textDisabledColor: theme.text.tertiary,
+                                textInactiveColor: theme.text.tertiary,
+                            }}
+                            current={CURRENT_DATE}
+                            onDayPress={(day: Day) => {
+                                setSelected(day.dateString);
+                            }}
+                            markedDates={{ ...formattedMarkedList() }}
                         />
-                    );
-                })}
+                    </View>
+                </View>
+                <View style={styles.notesWrapper}>
+                    {targetSession?.exercises.map((e, index) => {
+                        const key = e.name + index;
+                        return (
+                            <ExerciseCard
+                                key={key}
+                                name={e.name}
+                                info={e.info}
+                                sets={e.sets}
+                                reps={e.reps}
+                                onPress={() => handleInsertPress(index)}
+                            />
+                        );
+                    })}
+                </View>
+                <ExerciseInputModal index={exerciseIndex} />
+            </ScrollView>
+            <View style={styles.IconWrapper}>
                 <Icon
                     antIconName="plus"
+                    size={30}
                     bgColor={theme.button.add}
                     style={styles.addIcon}
                     onPress={() => handleInsertPress(-1)}
                 />
             </View>
-            <ExerciseInputModal index={exerciseIndex} />
-        </ScrollView>
+        </>
     );
 };
 
@@ -133,10 +138,10 @@ const createStyles = (theme: Theme) =>
             backgroundColor: theme.background.secondary,
         },
         notesWrapper: {
-            marginLeft: 58,
             alignItems: 'baseline',
         },
-        addIcon: { marginTop: 10 },
+        IconWrapper: { position: 'absolute', bottom: 10, right: 10 },
+        addIcon: {},
         note: {
             borderRadius: 10,
             marginTop: 10,
