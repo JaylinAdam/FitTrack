@@ -11,10 +11,9 @@ const Tools = {
     },
 
     isOnlyNumbers: (str: string): boolean => {
-        return /^\d+$/.test(str);
+        return str === '' || /^\d+$/.test(str);
     },
 
-    isOnlyNumbers: (str: string): boolean => str === "" || /^\d+$/.test(str),
     isOnlyLettersWithSpaces: (str: string): boolean => {
         return /^[a-zA-Z\s]+$/.test(str);
     },
