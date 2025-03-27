@@ -14,6 +14,7 @@ const Tools = {
         return /^\d+$/.test(str);
     },
 
+    isOnlyNumbers: (str: string): boolean => str === "" || /^\d+$/.test(str),
     isOnlyLettersWithSpaces: (str: string): boolean => {
         return /^[a-zA-Z\s]+$/.test(str);
     },
@@ -22,7 +23,6 @@ const Tools = {
     generateWorkoutDisplay: (sets: string, reps: string, info: string) => {
         const x = sets || reps ? 'x' : '';
         const showInfo = info ? `•${info}` : '';
-
         return sets + x + reps + showInfo;
     },
 };

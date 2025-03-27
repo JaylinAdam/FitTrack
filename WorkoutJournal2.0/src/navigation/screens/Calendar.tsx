@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { Button, ScrollView, StyleSheet, View } from 'react-native';
 // import { useNavigation } from '@react-navigation/native';
 import { Calendar as CalComp } from 'react-native-calendars';
 import { useApp, Theme, useTheme } from '../../Context';
@@ -24,18 +24,23 @@ export const Calendar = () => {
         targetSession,
         CURRENT_DATE,
         setVisible,
+        handleExDelete,
     } = useApp();
     const { theme } = useTheme();
     // STYLE
     const styles = useMemo(() => createStyles(theme), [theme]);
     // STATES
     const [exerciseIndex, setExerciseIndex] = useState(-1);
-
+    
     // METHOD: Insert Button and Update Press
     const handleInsertPress = (index: number) => {
         setExerciseIndex(index);
         setVisible(true);
     };
+
+    const handleDeletePress = (index: number) => {
+        handleExDelete(index);
+    }
 
     // METHOD: returns formatted list of sessions to display mark on calendar dates
     const formattedMarkedList = () => {
@@ -91,16 +96,17 @@ export const Calendar = () => {
                     </View>
                 </View>
                 <View style={styles.notesWrapper}>
-                    {targetSession?.exercises.map((e, index) => {
-                        const key = e.name + index;
-                        return (
-                            <ExerciseCard
-                                key={key}
-                                name={e.name}
-                                info={e.info}
-                                sets={e.sets}
-                                reps={e.reps}
-                                onPress={() => handleInsertPress(index)}
+                  {targetSession?.exercises.map((e, index) => {
+                      const key = e.name + index;
+                      return (
+                          <ExerciseCard
+                              key={key}
+                              name={e.name}
+                              info={e.info}
+                              sets={e.sets}
+                              reps={e.reps}
+                              onInsertPress={() => handleInsertPress(index)}
+                              onDeletePress={() => handleDeletePress(index)}
                             />
                         );
                     })}

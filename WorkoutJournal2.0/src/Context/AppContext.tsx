@@ -22,6 +22,7 @@ interface AppState {
     CURRENT_DATE: string;
     TARGET_DATE: string;
     handleExSubmit: (exercise: Exercise, exerciseIndex: number) => void;
+    handleExDelete: (exerciseIndex: number) => void;
 }
 
 const defaultState: AppState = {
@@ -36,6 +37,7 @@ const defaultState: AppState = {
     CURRENT_DATE: '',
     TARGET_DATE: '',
     handleExSubmit: () => {},
+    handleExDelete: () => {},
 };
 
 const AppContext = createContext<AppState>(defaultState);
@@ -87,12 +89,46 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
                 ];
             }
         } else {
+            // create session if it does not exist
             const newSession = new Session('', TARGET_DATE, '', [exercise]);
             sessionList = [...sessions, newSession];
         }
+        // update session state
         setSessions(sessionList);
+        // update local storage
         saveData(sessionList);
         setVisible(false);
+    };
+
+    // METHOD: Handle deletion of exercise from session state
+    const handleExDelete = (exerciseIndex: number) => {
+        const sessionIndex = sessions?.findIndex(s => s.date === TARGET_DATE);
+
+        var sessionList = [...sessions];
+        // if session targeted
+        if (sessionIndex >= 0) {
+            // if exercise targeted
+            if (exerciseIndex >= 0) {
+                // remove exercise from list
+                sessionList[sessionIndex] = {
+                    ...sessionList[sessionIndex],
+                    exercises: sessionList[sessionIndex].exercises.filter(
+                        (_, index) => index !== exerciseIndex,
+                    ),
+                };
+            }
+            // if no exercises in session
+            if (sessionList[sessionIndex].exercises.length === 0) {
+                // remove session from list
+                sessionList = sessionList.filter(
+                    (_, index) => index !== sessionIndex,
+                );
+            }
+        }
+        // update session state
+        setSessions(sessionList);
+        // update local storage
+        saveData(sessionList);
     };
 
     // METHOD: Save data to local storage as "SessionData" (can be viewed in Application > Local Storage > localhost)
@@ -140,6 +176,7 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
                 targetSession,
                 todaySession,
                 handleExSubmit,
+                handleExDelete,
             }}
         >
             {children}
