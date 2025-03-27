@@ -10,6 +10,7 @@ interface Props {
     bgColor?: string;
     style?: any;
     onPress: () => void;
+    disabled?: boolean;
 }
 
 export const Icon = ({
@@ -19,6 +20,7 @@ export const Icon = ({
     bgColor,
     style,
     onPress,
+    disabled = false,
 }: Props) => {
     // CONTEXT
     const { theme } = useTheme();
@@ -35,6 +37,7 @@ export const Icon = ({
             color={color ?? theme.text.quaternary}
             style={[styles.icon, { ...style }]}
             onPress={onPress}
+            disabled={disabled}
         />
     );
 };

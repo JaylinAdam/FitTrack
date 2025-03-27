@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useTheme, Theme, useApp, Tools } from '../../../Context';
 import { Exercise, KeyType } from '../../../../models';
-import { Icon, Input } from '.';
+import { ExerciseCard, Icon, Input } from '.';
 
 interface Props {
     index: number;
@@ -70,22 +70,13 @@ export const ExerciseForm = ({ index }: Props) => {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>{TARGET_DATE}</Text>
-            <View style={styles.row}>
+            <View style={styles.column}>
                 <Input
                     title="Exercise"
                     value={name}
                     onChange={value => handleUpdateInput(value, setName)}
                     keyType={KeyType.default}
                 />
-
-                <Input
-                    title="Info"
-                    value={info}
-                    onChange={value => handleUpdateInput(value, setInfo)}
-                    keyType={KeyType.default}
-                />
-            </View>
-            <View style={styles.row}>
                 <Input
                     title="Sets"
                     value={sets}
@@ -102,22 +93,40 @@ export const ExerciseForm = ({ index }: Props) => {
                     }
                     keyType={KeyType.numeric}
                 />
+                <Input
+                    title="Info"
+                    value={info}
+                    onChange={value => handleUpdateInput(value, setInfo)}
+                    keyType={KeyType.default}
+                />
+                {!!(name || reps || sets || info) && (
+                    <>
+                        <Text style={styles.preview}>Preview</Text>
+                        <ExerciseCard
+                            key="tempExerciseCard"
+                            name={name}
+                            reps={reps}
+                            sets={sets}
+                            info={info}
+                            onPress={undefined}
+                        />
+                    </>
+                )}
             </View>
             <View style={styles.btnContainer}>
-                {validSubmission({
-                    reps,
-                    sets,
-                    info,
-                    name,
-                }) && (
-                    <Icon
-                        antIconName="check"
-                        size={25}
-                        bgColor={theme.button.submit}
-                        style={styles.submitIcon}
-                        onPress={handleSubmit}
-                    />
-                )}
+                <Icon
+                    antIconName="check"
+                    size={25}
+                    bgColor={
+                        validSubmission({ reps, sets, info, name })
+                            ? theme.button.submit
+                            : theme.button.disabled
+                    }
+                    style={styles.submitIcon}
+                    onPress={handleSubmit}
+                    disabled={!validSubmission({ reps, sets, info, name })}
+                />
+
                 <Icon
                     antIconName="close"
                     size={25}
@@ -132,27 +141,31 @@ export const ExerciseForm = ({ index }: Props) => {
 const createStyles = (theme: Theme) =>
     StyleSheet.create({
         container: {
-            paddingHorizontal: 20,
-            paddingTop: 20,
+            padding: 20,
         },
-        row: {
-            flexDirection: 'row',
+        column: {
+            flexDirection: 'column',
             justifyContent: 'space-between',
         },
 
         title: {
             fontSize: 20,
             fontWeight: 'bold',
-            marginBottom: 5,
             color: theme.text.primary,
         },
 
         btnContainer: {
             flexDirection: 'row',
             justifyContent: 'center',
-            paddingVertical: 25,
+            paddingTop: 15,
         },
         submitIcon: {
             marginRight: 15,
+        },
+        preview: {
+            fontSize: 15,
+            fontWeight: 'semibold',
+            marginTop: 10,
+            color: theme.text.primary,
         },
     });

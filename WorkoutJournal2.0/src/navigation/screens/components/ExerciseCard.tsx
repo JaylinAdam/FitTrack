@@ -10,7 +10,6 @@ interface Props {
     info: string;
     onInsertPress: () => void;
     onDeletePress: () => void;
-
 }
 
 export const ExerciseCard = ({ name, sets, reps, info, onInsertPress, onDeletePress }: Props) => {
@@ -19,19 +18,14 @@ export const ExerciseCard = ({ name, sets, reps, info, onInsertPress, onDeletePr
     // STYLE
     const styles = useMemo(() => createStyles(theme), [theme]);
 
-    // METHOD: generate display for exercise
-    const generateDisplay = (sets: string, reps: string, info: string) => {
-        const x = sets || reps ? 'x' : '';
-        const showInfo = info ? `•${info}` : '';
-
-        return sets + x + reps + showInfo;
-    };
-
     return (
         <Pressable style={styles.note} onPress={onInsertPress}>
             <Text style={styles.title}>{name}</Text>
             <Text style={styles.desc}>{generateDisplay(sets, reps, info)}</Text>
             <Button onPress={onDeletePress} title="Delete" />
+            <Text style={styles.desc}>
+                {Tools.generateWorkoutDisplay(sets, reps, info)}
+            </Text>
         </Pressable>
     );
 };
