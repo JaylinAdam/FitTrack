@@ -26,8 +26,8 @@ export const ExerciseInputModal = ({ index }: { index: number }) => {
             {/* Dismiss modal if clicking on overlay space */}
             <Pressable onPress={handleDismiss} style={styles.overlay}>
                 {/* Prevent dismissing when clicking inside the modal */}
-                <Pressable onPress={() => {}} style={styles.dialogWrapper}>
-                    <View style={styles.dialog}>
+                <Pressable onPress={() => {}} style={styles.modalWrapper}>
+                    <View style={styles.modal}>
                         <ExerciseForm index={index} />
                     </View>
                 </Pressable>
@@ -44,11 +44,11 @@ const createStyles = (theme: Theme) =>
             paddingTop: 60,
             alignItems: 'center',
         },
-        dialogWrapper: {
+        modalWrapper: {
             width: '100%',
             padding: 8,
         },
-        dialog: {
+        modal: {
             width: '100%',
             backgroundColor: theme.background.secondary,
             borderRadius: 10,

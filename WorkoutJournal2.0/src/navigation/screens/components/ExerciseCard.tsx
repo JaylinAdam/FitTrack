@@ -1,5 +1,5 @@
-import React, { useMemo } from 'react';
-import { Text, StyleSheet, Pressable, Button } from 'react-native';
+import React, { useMemo, useState } from 'react';
+import { Text, StyleSheet, Pressable, Button, View } from 'react-native';
 import { Theme, Tools, useTheme } from '../../../Context';
 
 interface Props {
@@ -12,19 +12,31 @@ interface Props {
     onDeletePress: () => void;
 }
 
-export const ExerciseCard = ({ name, sets, reps, info, onInsertPress, onDeletePress }: Props) => {
+export const ExerciseCard = ({
+    name,
+    sets,
+    reps,
+    info,
+    onInsertPress,
+    onDeletePress,
+}: Props) => {
     // CONTEXTS
     const { theme } = useTheme();
     // STYLE
     const styles = useMemo(() => createStyles(theme), [theme]);
+    // STATES
+    const [options, setOptions] = useState(false);
 
     return (
-        <Pressable style={styles.note} onPress={onInsertPress}>
+        <Pressable style={styles.note}>
             <Text style={styles.title}>{name}</Text>
             <Text style={styles.desc}>
                 {Tools.generateWorkoutDisplay(sets, reps, info)}
             </Text>
-            <Button onPress={onDeletePress} title="Delete" />
+            <View style={[{ zIndex: options ? 1 : -1 }, StyleSheet.absoluteFillObject]}>
+                <Button onPress={onInsertPress} title='Edit'/>
+                <Button onPress={onDeletePress} title='Delete'/>
+            </View>
         </Pressable>
     );
 };
