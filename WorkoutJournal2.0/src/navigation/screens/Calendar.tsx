@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Button, ScrollView, StyleSheet, View } from 'react-native';
+import { Button, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 // import { useNavigation } from '@react-navigation/native';
 import { Calendar as CalComp } from 'react-native-calendars';
 import { useApp, Theme, useTheme } from '../../Context';
@@ -24,6 +24,8 @@ export const Calendar = () => {
         targetSession,
         CURRENT_DATE,
         setVisible,
+        setOptions,
+        setSelectedIndex,
         handleExDelete,
     } = useApp();
     const { theme } = useTheme();
@@ -31,16 +33,28 @@ export const Calendar = () => {
     const styles = useMemo(() => createStyles(theme), [theme]);
     // STATES
     const [exerciseIndex, setExerciseIndex] = useState(-1);
-    
+
     // METHOD: Insert Button and Update Press
     const handleInsertPress = (index: number) => {
         setExerciseIndex(index);
         setVisible(true);
+        handleOptionsClose();
     };
 
+    // METHOD: Delete Button Press
     const handleDeletePress = (index: number) => {
         handleExDelete(index);
-    }
+    };
+
+    // METHOD: Display Options Menu for Exercise Card
+    const handleOptionsOpen = (index: number) => {
+        setSelectedIndex(index);
+        setOptions(true);
+    };
+
+    const handleOptionsClose = () => {
+        setOptions(false);
+    };
 
     // METHOD: returns formatted list of sessions to display mark on calendar dates
     const formattedMarkedList = () => {
@@ -65,7 +79,7 @@ export const Calendar = () => {
     };
 
     return (
-        <>
+        <Pressable onPress={() => handleOptionsClose()} style={StyleSheet.absoluteFillObject}>
             <ScrollView
                 showsVerticalScrollIndicator={false}
                 style={styles.scrollView}
@@ -90,27 +104,30 @@ export const Calendar = () => {
                             current={CURRENT_DATE}
                             onDayPress={(day: Day) => {
                                 setSelected(day.dateString);
+                                handleOptionsClose();
                             }}
                             markedDates={{ ...formattedMarkedList() }}
                         />
                     </View>
                 </View>
-                <View style={styles.notesWrapper}>
-                  {targetSession?.exercises.map((e, index) => {
-                      const key = e.name + index;
-                      return (
-                          <ExerciseCard
-                              key={key}
-                              name={e.name}
-                              info={e.info}
-                              sets={e.sets}
-                              reps={e.reps}
-                              onInsertPress={() => handleInsertPress(index)}
-                              onDeletePress={() => handleDeletePress(index)}
-                            />
-                        );
-                    })}
-                </View>
+                    <View style={styles.notesWrapper}>
+                        {targetSession?.exercises.map((e, index) => {
+                            const key = e.name + index;
+                            return (
+                                <ExerciseCard
+                                key={key}
+                                index={index}
+                                name={e.name}
+                                info={e.info}
+                                sets={e.sets}
+                                reps={e.reps}
+                                onInsertPress={() => handleInsertPress(index)}
+                                onDeletePress={() => handleDeletePress(index)}
+                                handleOptionsPress={() => handleOptionsOpen(index)}
+                                />
+                            );
+                        })}
+                    </View>
                 <ExerciseInputModal index={exerciseIndex} />
             </ScrollView>
             <View style={styles.IconWrapper}>
@@ -120,9 +137,9 @@ export const Calendar = () => {
                     bgColor={theme.button.add}
                     style={styles.addIcon}
                     onPress={() => handleInsertPress(-1)}
-                />
+                    />
             </View>
-        </>
+        </Pressable>
     );
 };
 
