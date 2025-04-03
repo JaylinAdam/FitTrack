@@ -11,7 +11,6 @@ interface Props {
     index: number;
     onInsertPress: () => void;
     onDeletePress: () => void;
-    handleOptionsPress: () => void;
 }
 
 export const ExerciseCard = ({
@@ -22,31 +21,42 @@ export const ExerciseCard = ({
     index,
     onInsertPress,
     onDeletePress,
-    handleOptionsPress,
 }: Props) => {
     // CONTEXTS
-    const { visible, options, selectedIndex } = useApp();
+    const { visible, selectCard, selectedIndex } = useApp();
     const { theme } = useTheme();
     // STYLE
-    const styles = useMemo(() => createStyles(theme, options, index, selectedIndex, visible), [theme, options, index, selectedIndex, visible]);
+    const styles = useMemo(
+        () => createStyles(theme, index, selectedIndex, visible),
+        [theme, index, selectedIndex, visible],
+    );
 
     return (
         <View style={styles.note}>
-            <Pressable style={styles.optionsWrapper} onPress={handleOptionsPress}>
+            <Pressable
+                style={styles.optionsWrapper}
+                onPress={() => selectCard(index)}
+                id="something"
+            >
                 <Text style={styles.title}>{name}</Text>
                 <Text style={styles.desc}>
                     {Tools.generateWorkoutDisplay(sets, reps, info)}
                 </Text>
                 <View style={styles.options}>
-                    <Button onPress={onInsertPress} title='Edit'/>
-                    <Button onPress={onDeletePress} title='Delete'/>
+                    <Button onPress={onInsertPress} title="Edit" />
+                    <Button onPress={onDeletePress} title="Delete" />
                 </View>
             </Pressable>
         </View>
     );
 };
 
-const createStyles = (theme: Theme, options: boolean, index: number, selectedIndex: number, visible: boolean) =>
+const createStyles = (
+    theme: Theme,
+    index: number,
+    selectedIndex: number,
+    visible: boolean,
+) =>
     StyleSheet.create({
         note: {
             padding: 8,
@@ -56,7 +66,10 @@ const createStyles = (theme: Theme, options: boolean, index: number, selectedInd
             boxShadow: '0px 0px 3px #a3a3a3',
             width: '100%',
             borderWidth: 1,
-            borderColor: (options && index === selectedIndex && !visible) ? theme.background.accent : 'transparent',
+            borderColor:
+                index === selectedIndex && !visible
+                    ? theme.background.accent
+                    : 'transparent',
         },
         title: {
             fontSize: 20,
@@ -72,6 +85,6 @@ const createStyles = (theme: Theme, options: boolean, index: number, selectedInd
             right: 0,
             flexDirection: 'row',
             gap: 5,
-            display: (options && index === selectedIndex && !visible) ? 'flex' : 'none',
+            display: index === selectedIndex && !visible ? 'flex' : 'none',
         },
     });

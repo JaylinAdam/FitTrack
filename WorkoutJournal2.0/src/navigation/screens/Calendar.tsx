@@ -24,8 +24,7 @@ export const Calendar = () => {
         targetSession,
         CURRENT_DATE,
         setVisible,
-        setOptions,
-        setSelectedIndex,
+        unSelectCard,
         handleExDelete,
     } = useApp();
     const { theme } = useTheme();
@@ -38,22 +37,17 @@ export const Calendar = () => {
     const handleInsertPress = (index: number) => {
         setExerciseIndex(index);
         setVisible(true);
-        handleOptionsClose();
+        unSelectCard();
     };
 
     // METHOD: Delete Button Press
     const handleDeletePress = (index: number) => {
         handleExDelete(index);
-    };
-
-    // METHOD: Display Options Menu for Exercise Card
-    const handleOptionsOpen = (index: number) => {
-        setSelectedIndex(index);
-        setOptions(true);
-    };
-
-    const handleOptionsClose = () => {
-        setOptions(false);
+        unSelectCard();
+        console.log(
+            'this exercise was deleted',
+            targetSession?.exercises[index],
+        );
     };
 
     // METHOD: returns formatted list of sessions to display mark on calendar dates
@@ -79,7 +73,7 @@ export const Calendar = () => {
     };
 
     return (
-        <Pressable onPress={() => handleOptionsClose()} style={StyleSheet.absoluteFillObject}>
+        <Pressable onPress={unSelectCard} style={StyleSheet.absoluteFillObject}>
             <ScrollView
                 showsVerticalScrollIndicator={false}
                 style={styles.scrollView}
@@ -104,17 +98,17 @@ export const Calendar = () => {
                             current={CURRENT_DATE}
                             onDayPress={(day: Day) => {
                                 setSelected(day.dateString);
-                                handleOptionsClose();
+                                unSelectCard();
                             }}
                             markedDates={{ ...formattedMarkedList() }}
                         />
                     </View>
                 </View>
-                    <View style={styles.notesWrapper}>
-                        {targetSession?.exercises.map((e, index) => {
-                            const key = e.name + index;
-                            return (
-                                <ExerciseCard
+                <View style={styles.notesWrapper}>
+                    {targetSession?.exercises.map((e, index) => {
+                        const key = e.name + index;
+                        return (
+                            <ExerciseCard
                                 key={key}
                                 index={index}
                                 name={e.name}
@@ -123,11 +117,10 @@ export const Calendar = () => {
                                 reps={e.reps}
                                 onInsertPress={() => handleInsertPress(index)}
                                 onDeletePress={() => handleDeletePress(index)}
-                                handleOptionsPress={() => handleOptionsOpen(index)}
-                                />
-                            );
-                        })}
-                    </View>
+                            />
+                        );
+                    })}
+                </View>
                 <ExerciseInputModal index={exerciseIndex} />
             </ScrollView>
             <View style={styles.IconWrapper}>
@@ -137,7 +130,7 @@ export const Calendar = () => {
                     bgColor={theme.button.add}
                     style={styles.addIcon}
                     onPress={() => handleInsertPress(-1)}
-                    />
+                />
             </View>
         </Pressable>
     );
