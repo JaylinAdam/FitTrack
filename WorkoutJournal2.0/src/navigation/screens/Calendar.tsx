@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { Button, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 // import { useNavigation } from '@react-navigation/native';
 import { Calendar as CalComp } from 'react-native-calendars';
 import { useApp, Theme, useTheme } from '../../Context';
@@ -24,6 +24,8 @@ export const Calendar = () => {
         targetSession,
         CURRENT_DATE,
         setVisible,
+        unSelectCard,
+        handleExDelete,
     } = useApp();
     const { theme } = useTheme();
     // STYLE
@@ -35,6 +37,17 @@ export const Calendar = () => {
     const handleInsertPress = (index: number) => {
         setExerciseIndex(index);
         setVisible(true);
+        unSelectCard();
+    };
+
+    // METHOD: Delete Button Press
+    const handleDeletePress = (index: number) => {
+        handleExDelete(index);
+        unSelectCard();
+        console.log(
+            'this exercise was deleted',
+            targetSession?.exercises[index],
+        );
     };
 
     // METHOD: returns formatted list of sessions to display mark on calendar dates
@@ -60,7 +73,7 @@ export const Calendar = () => {
     };
 
     return (
-        <>
+        <Pressable onPress={unSelectCard} style={StyleSheet.absoluteFillObject}>
             <ScrollView
                 showsVerticalScrollIndicator={false}
                 style={styles.scrollView}
@@ -85,6 +98,7 @@ export const Calendar = () => {
                             current={CURRENT_DATE}
                             onDayPress={(day: Day) => {
                                 setSelected(day.dateString);
+                                unSelectCard();
                             }}
                             markedDates={{ ...formattedMarkedList() }}
                         />
@@ -96,11 +110,13 @@ export const Calendar = () => {
                         return (
                             <ExerciseCard
                                 key={key}
+                                index={index}
                                 name={e.name}
                                 info={e.info}
                                 sets={e.sets}
                                 reps={e.reps}
-                                onPress={() => handleInsertPress(index)}
+                                onInsertPress={() => handleInsertPress(index)}
+                                onDeletePress={() => handleDeletePress(index)}
                             />
                         );
                     })}
@@ -116,7 +132,7 @@ export const Calendar = () => {
                     onPress={() => handleInsertPress(-1)}
                 />
             </View>
-        </>
+        </Pressable>
     );
 };
 

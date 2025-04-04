@@ -17,11 +17,16 @@ interface AppState {
     setSelected: React.Dispatch<React.SetStateAction<string>>;
     visible: boolean;
     setVisible: React.Dispatch<React.SetStateAction<boolean>>;
+    selectedIndex: number;
+    setSelectedIndex: React.Dispatch<React.SetStateAction<number>>;
     targetSession: Session | undefined;
     todaySession: Session | undefined;
     CURRENT_DATE: string;
     TARGET_DATE: string;
+    selectCard: (index: number) => void;
+    unSelectCard: () => void;
     handleExSubmit: (exercise: Exercise, exerciseIndex: number) => void;
+    handleExDelete: (exerciseIndex: number) => void;
 }
 
 const defaultState: AppState = {
@@ -31,11 +36,16 @@ const defaultState: AppState = {
     setSelected: () => {},
     visible: false,
     setVisible: () => {},
+    selectedIndex: -1,
+    setSelectedIndex: () => {},
     targetSession: undefined,
     todaySession: undefined,
     CURRENT_DATE: '',
     TARGET_DATE: '',
+    selectCard: () => {},
+    unSelectCard: () => {},
     handleExSubmit: () => {},
+    handleExDelete: () => {},
 };
 
 const AppContext = createContext<AppState>(defaultState);
@@ -45,6 +55,7 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
     const [sessions, setSessions] = useState<Session[]>([]);
     const [selected, setSelected] = useState('');
     const [visible, setVisible] = useState(false);
+    const [selectedIndex, setSelectedIndex] = useState(-1);
     const [storageLoading, setStorageLoading] = useState(true);
 
     // global variable
@@ -67,6 +78,15 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
         return focusSession(CURRENT_DATE);
     }, [sessions, selected]);
 
+    // METHOD: Select Exercise Card to Display Options Menu
+    const selectCard = (index: number) => {
+        setSelectedIndex(index);
+    };
+
+    const unSelectCard = () => {
+        setSelectedIndex(-1);
+    };
+
     // METHOD: Handle submission of exercise to session state
     const handleExSubmit = (exercise: Exercise, exerciseIndex: number) => {
         const sessionIndex = sessions?.findIndex(s => s.date === TARGET_DATE);
@@ -87,12 +107,46 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
                 ];
             }
         } else {
+            // create session if it does not exist
             const newSession = new Session('', TARGET_DATE, '', [exercise]);
             sessionList = [...sessions, newSession];
         }
+        // update session state
         setSessions(sessionList);
+        // update local storage
         saveData(sessionList);
         setVisible(false);
+    };
+
+    // METHOD: Handle deletion of exercise from session state
+    const handleExDelete = (exerciseIndex: number) => {
+        const sessionIndex = sessions?.findIndex(s => s.date === TARGET_DATE);
+
+        var sessionList = [...sessions];
+        // if session targeted
+        if (sessionIndex >= 0) {
+            // if exercise targeted
+            if (exerciseIndex >= 0) {
+                // remove exercise from list
+                sessionList[sessionIndex] = {
+                    ...sessionList[sessionIndex],
+                    exercises: sessionList[sessionIndex].exercises.filter(
+                        (_, index) => index !== exerciseIndex,
+                    ),
+                };
+            }
+            // if no exercises in session
+            if (sessionList[sessionIndex].exercises.length === 0) {
+                // remove session from list
+                sessionList = sessionList.filter(
+                    (_, index) => index !== sessionIndex,
+                );
+            }
+        }
+        // update session state
+        setSessions(sessionList);
+        // update local storage
+        saveData(sessionList);
     };
 
     // METHOD: Save data to local storage as "SessionData" (can be viewed in Application > Local Storage > localhost)
@@ -133,13 +187,17 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
                 setSelected,
                 visible,
                 setVisible,
-
+                selectedIndex,
+                setSelectedIndex,
                 CURRENT_DATE,
                 TARGET_DATE,
 
                 targetSession,
                 todaySession,
                 handleExSubmit,
+                handleExDelete,
+                selectCard,
+                unSelectCard,
             }}
         >
             {children}
