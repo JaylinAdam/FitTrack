@@ -17,10 +17,14 @@ interface AppState {
     setSelected: React.Dispatch<React.SetStateAction<string>>;
     visible: boolean;
     setVisible: React.Dispatch<React.SetStateAction<boolean>>;
+    selectedIndex: number;
+    setSelectedIndex: React.Dispatch<React.SetStateAction<number>>;
     targetSession: Session | undefined;
     todaySession: Session | undefined;
     CURRENT_DATE: string;
     TARGET_DATE: string;
+    selectCard: (index: number) => void;
+    unSelectCard: () => void;
     handleExSubmit: (exercise: Exercise, exerciseIndex: number) => void;
     handleExDelete: (exerciseIndex: number) => void;
 }
@@ -32,10 +36,14 @@ const defaultState: AppState = {
     setSelected: () => {},
     visible: false,
     setVisible: () => {},
+    selectedIndex: -1,
+    setSelectedIndex: () => {},
     targetSession: undefined,
     todaySession: undefined,
     CURRENT_DATE: '',
     TARGET_DATE: '',
+    selectCard: () => {},
+    unSelectCard: () => {},
     handleExSubmit: () => {},
     handleExDelete: () => {},
 };
@@ -47,6 +55,7 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
     const [sessions, setSessions] = useState<Session[]>([]);
     const [selected, setSelected] = useState('');
     const [visible, setVisible] = useState(false);
+    const [selectedIndex, setSelectedIndex] = useState(-1);
     const [storageLoading, setStorageLoading] = useState(true);
 
     // global variable
@@ -68,6 +77,15 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
     const todaySession = useMemo(() => {
         return focusSession(CURRENT_DATE);
     }, [sessions, selected]);
+
+    // METHOD: Select Exercise Card to Display Options Menu
+    const selectCard = (index: number) => {
+        setSelectedIndex(index);
+    };
+
+    const unSelectCard = () => {
+        setSelectedIndex(-1);
+    };
 
     // METHOD: Handle submission of exercise to session state
     const handleExSubmit = (exercise: Exercise, exerciseIndex: number) => {
@@ -169,7 +187,8 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
                 setSelected,
                 visible,
                 setVisible,
-
+                selectedIndex,
+                setSelectedIndex,
                 CURRENT_DATE,
                 TARGET_DATE,
 
@@ -177,6 +196,8 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
                 todaySession,
                 handleExSubmit,
                 handleExDelete,
+                selectCard,
+                unSelectCard,
             }}
         >
             {children}

@@ -57,7 +57,7 @@ const themes = {
         },
         button: {
             add: '#ff6d5d',
-            submit: '#83ff73',
+            submit: '#34b233',
             close: '#E3252B',
             disabled: '#a5a5a5',
         },
