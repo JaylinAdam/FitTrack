@@ -1,74 +1,151 @@
-# WorkoutApp_UI
+# FitTrack 🏋️‍♂️
 
-React Native Mobile App for Workout Logging
+A modern React Native mobile application for tracking workouts, exercises, and fitness progress. Built with Expo and TypeScript for cross-platform compatibility.
 
-## React Notes
--   [useState documentation](https://react.dev/reference/react/useState#setstate) 
+## 📱 Features
 
-## Git Notes
--   [Git Tips](https://stackoverflow.com/questions/315911/git-for-beginners-the-definitive-practical-guide)
--   [Branching strategies](https://www.geeksforgeeks.org/branching-strategies-in-git/)
+- **📅 Calendar View**: Visual calendar showing workout days with easy navigation
+- **💪 Exercise Tracking**: Log sets, reps, and weights for each exercise
+- **📊 Workout History**: View detailed workout information by date
+- **🎨 Modern UI**: Clean, intuitive interface with dark/light theme support
+- **📱 Cross-Platform**: Works on iOS, Android, and Web
+- **💾 Local Storage**: All data stored locally using AsyncStorage
 
-_How to enter branch_
+## 🚀 Getting Started
 
--   git checkout "branch name"
+### Prerequisites
 
-_How to create branch_
+- Node.js (v16 or higher)
+- npm or yarn
+- Expo CLI (`npm install -g @expo/cli`)
+- iOS Simulator (for iOS development) or Android Studio (for Android development)
 
--   git checkout -b "branch name"
+### Installation
 
-_How to rename branch_
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/JaylinAdam/FitTrack.git
+   cd FitTrack
+   ```
 
--   git branch -m "new branch name"
+2. **Install dependencies**
+   ```bash
+   cd WorkoutJournal2.0
+   npm install
+   ```
 
-_How to delete local branch_
+3. **Start the development server**
+   ```bash
+   npm start
+   ```
 
--   git branch -d "branch name"
+4. **Run on your preferred platform**
+   ```bash
+   # iOS
+   npm run ios
+   
+   # Android
+   npm run android
+   
+   # Web
+   npm run web
+   ```
 
-_How to delete remote branch_
+## 🏗️ Project Structure
 
--   git push origin :"branch name"
+```
+FitTrack/
+├── WorkoutJournal2.0/          # Main React Native app
+│   ├── src/
+│   │   ├── App.tsx             # Main app component
+│   │   ├── Context/            # React Context providers
+│   │   ├── navigation/         # Navigation setup and screens
+│   │   └── assets/             # Images and icons
+│   ├── models/                 # TypeScript interfaces and types
+│   ├── assets/                 # App icons and splash screens
+│   └── package.json            # Dependencies and scripts
+├── Feature.md                  # Feature documentation
+└── README.md                   # This file
+```
 
-_How to see branches on local machine_
+## 🎯 Core Functionality
 
--   git branch
+### Workout Logging
+- Add exercises with custom names
+- Track sets, reps, and weights
+- Add notes and comments
+- Date and time tracking
 
-_How to fetch remote branches_
+### Calendar Integration
+- Monthly calendar view
+- Visual indicators for workout days
+- Tap to view workout details
+- Easy navigation between dates
 
--   git fetch -v -a
+### Data Management
+- Local data persistence
+- Export/import capabilities
+- Data backup and restore
 
-_How to pull down new changes made in branch from remote_
+## 🛠️ Tech Stack
 
--   git pull
+- **Framework**: React Native with Expo
+- **Language**: TypeScript
+- **Navigation**: React Navigation
+- **Storage**: AsyncStorage
+- **UI Components**: Custom components with React Native
+- **Calendar**: react-native-calendars
+- **Icons**: react-native-vector-icons
 
-_How to add before commit_
+## 📱 Screenshots
 
--   git add "path" i.e. git add ./readme.md
+*Screenshots will be added as the app is developed*
 
-_How to commit_
+## 🤝 Contributing
 
--   git commit "message" i.e git commit "this is a message"
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-_How to push (first time there will be a special command)_
+## 📝 Development Notes
 
--   git push
+### Current Features in Development
+- Exercise form improvements
+- Card component enhancements
+- Settings page with hamburger menu
+- Modal improvements
+- Code cleanup and organization
 
-## Infrastructure??? Tentatively
+### Planned Features
+- Data synchronization
+- Workout templates
+- Progress charts and analytics
+- Social features
+- Workout sharing
 
-**Frontend** - React Native (_mobile app_)
+## 🐛 Known Issues
 
-**Backend** - Node / Express Server (_api written in javascript_)
+- Some styling needs refinement
+- Input form styling could be improved
+- Modal implementation needs review
 
-**Database** - MongoDb (_non relationship database_)
+## 📄 License
 
-## What is my app? What am I trying to solve
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
--   A place to log my workouts
--   Record sets, reps, weight per workout (with date and time)
--   Notes / Comments
+## 👨‍💻 Author
 
-## Features / Story (What and What for)
+**Jaylin Adam**
+- GitHub: [@JaylinAdam](https://github.com/JaylinAdam)
 
--   I want to see a calendar with an indication of if I worked out that day
--   When I click on a day, I want to see my workout (more details)
--   I want to be able to record my workouts by the date
+## 🙏 Acknowledgments
+
+- Built with [Expo](https://expo.dev/)
+- Icons from [Lucide](https://lucide.dev/)
+- Calendar component from [react-native-calendars](https://github.com/wix/react-native-calendars)
+
+---
+
+**FitTrack** - Your personal fitness companion 📱💪
